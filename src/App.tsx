@@ -3,8 +3,6 @@ import { silimojis, type Silimoji } from './data/silimojis'
 import './index.css'
 
 type Filter = 'All' | 'Recommended' | Silimoji['category']
-type ViewMode = 'grid' | 'list'
-type Theme = 'light' | 'dark'
 
 const filters: Filter[] = [
   'All',
@@ -24,24 +22,53 @@ const filters: Filter[] = [
 
 const repositoryUrl = 'https://github.com/lionnus/silimoji'
 
+const escapeHtml = (value: string) =>
+  value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+
+const buildPrintDocument = (items: Silimoji[]) => {
+  const rows = items
+    .map(
+      (item) =>
+        `<tr><td>${escapeHtml(item.emoji)}</td><td>${escapeHtml(item.shortcode)}</td><td>${escapeHtml(item.title)}</td><td>${escapeHtml(item.description)}</td><td>${escapeHtml(item.category)}</td></tr>`,
+    )
+    .join('')
+
+  return `<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Silimoji A4 Sheet</title>
+  <style>
+    @page { size: A4; margin: 12mm; }
+    body { font-family: Inter, Arial, sans-serif; color: #111; margin: 0; }
+    h1 { margin: 0 0 8px; font-size: 18px; }
+    p { margin: 0 0 10px; font-size: 12px; color: #444; }
+    table { width: 100%; border-collapse: collapse; font-size: 11px; }
+    th, td { border: 1px solid #d4d4d4; text-align: left; padding: 6px; vertical-align: top; }
+    th { background: #f5f5f5; }
+  </style>
+</head>
+<body>
+  <h1>Silimoji Commit Reference</h1>
+  <p>Filtered list prepared for A4 print or PDF export.</p>
+  <table>
+    <thead><tr><th>Emoji</th><th>Shortcode</th><th>Title</th><th>Description</th><th>Category</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table>
+  <script>window.onload = () => window.print();</script>
+</body>
+</html>`
+}
+
 function App() {
   const searchRef = useRef<HTMLInputElement>(null)
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState<Filter>('All')
-  const [view, setView] = useState<ViewMode>('grid')
-  const [theme, setTheme] = useState<Theme>(() => {
-    const savedTheme = window.localStorage.getItem('silimoji-theme')
-    if (savedTheme === 'light' || savedTheme === 'dark') {
-      return savedTheme
-    }
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-  })
   const [copied, setCopied] = useState('')
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme)
-    window.localStorage.setItem('silimoji-theme', theme)
-  }, [theme])
 
   const visible = useMemo(() => {
     const q = search.trim().toLowerCase()
@@ -105,35 +132,40 @@ function App() {
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [visible])
 
+  const downloadTxt = () => {
+    const header = 'Silimoji concise instructions\n\n'
+    const instructions = visible
+      .map(
+        (item) =>
+          `${item.shortcode} ${item.emoji} - Use for ${item.title.toLowerCase()}. ${item.description}`,
+      )
+      .join('\n')
+    const blob = new Blob([header, instructions], { type: 'text/plain;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = 'silimoji-instructions.txt'
+    link.click()
+    URL.revokeObjectURL(url)
+  }
+
+  const downloadPdf = () => {
+    const printWindow = window.open('', '_blank', 'noopener,noreferrer')
+    if (!printWindow) {
+      setCopied('Popup blocked')
+      window.setTimeout(() => setCopied(''), 1000)
+      return
+    }
+    printWindow.document.open()
+    printWindow.document.write(buildPrintDocument(visible))
+    printWindow.document.close()
+  }
+
   return (
     <main className="app">
       <header className="topbar">
-        <div>
-          <h1>silimoji</h1>
-          <p className="tagline">A silicon-flavored emoji guide for hardware development commits.</p>
-        </div>
-        <div className="header-actions">
-          <a href={repositoryUrl} target="_blank" rel="noreferrer">
-            GitHub repository
-          </a>
-          <button type="button" onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
-            {theme === 'dark' ? '☀️ Light' : '🌙 Dark'}
-          </button>
-          <button type="button" onClick={() => setView(view === 'grid' ? 'list' : 'grid')}>
-            {view === 'grid' ? '☰ List' : '▦ Grid'}
-          </button>
-        </div>
+        <h1>silimoji</h1>
       </header>
-
-      <section className="hero">
-        <h2>silimoji</h2>
-        <p>
-          A curated commit emoji guide for RTL, verification, PPA, Python tooling, scripts, CI, and hardware
-          flow infrastructure.
-        </p>
-        <small>Inspired by Gitmoji. Existing Gitmoji meanings are preserved.</small>
-        <pre className="format">{'<intention> [scope?]: <message>'}</pre>
-      </section>
 
       <section className="controls">
         <input
@@ -157,51 +189,38 @@ function App() {
             </button>
           ))}
         </div>
+        <div className="actions">
+          <button type="button" onClick={downloadPdf}>
+            Download PDF (A4)
+          </button>
+          <button type="button" onClick={downloadTxt}>
+            Download TXT
+          </button>
+        </div>
       </section>
 
-      {view === 'grid' ? (
-        <section className="cards">
-          {visible.map((item) => (
-            <article className="item" key={item.shortcode}>
-              <div className="emoji">{item.emoji}</div>
-              <div className="content">
-                <h3>{item.shortcode}</h3>
-                <p className="title">{item.title}</p>
-                <p>{item.description}</p>
-                <div className="badges">
-                  <span>{item.category}</span>
-                  <span>{item.type}</span>
-                  {item.recommended && <span>recommended</span>}
-                </div>
-                <code>{item.example}</code>
-                <div className="copy-row">
-                  <button type="button" onClick={() => void copy(item.shortcode)}>
-                    Copy shortcode
-                  </button>
-                  <button type="button" onClick={() => void copy(item.emoji)}>
-                    Copy emoji
-                  </button>
-                </div>
-              </div>
-            </article>
-          ))}
-        </section>
-      ) : (
-        <section className="list">
-          {visible.map((item) => (
-            <article className="dense-item" key={item.shortcode}>
-              {item.emoji} {item.shortcode} — {item.title} — {item.category}
-            </article>
-          ))}
-        </section>
-      )}
+      <section className="results">
+        {visible.map((item) => (
+          <article className="row" key={item.shortcode}>
+            <button type="button" onClick={() => void copy(item.emoji)}>
+              {item.emoji}
+            </button>
+            <button type="button" onClick={() => void copy(item.shortcode)}>
+              {item.shortcode}
+            </button>
+            <p>
+              <strong>{item.title}</strong> · {item.description}
+            </p>
+          </article>
+        ))}
+      </section>
 
       {copied && <p className="copied">Copied: {copied}</p>}
       <footer className="footer">
         <p>
-          Author: Lionnus Kesting · PhD student at ETH Zurich, IIS
-          <br />
-          Contributions are welcome.
+          <a href={repositoryUrl} target="_blank" rel="noreferrer">
+            GitHub repository
+          </a>
         </p>
       </footer>
     </main>
