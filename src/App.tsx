@@ -152,7 +152,7 @@ function App() {
     URL.revokeObjectURL(url)
   }
 
-  const downloadPdf = () => {
+  const openPrintableView = () => {
     const printWindow = window.open('', '_blank', 'noopener,noreferrer')
     if (!printWindow) {
       setCopied('Please allow popups to open PDF view')
@@ -193,7 +193,7 @@ function App() {
           ))}
         </div>
         <div className="actions">
-          <button type="button" onClick={downloadPdf}>
+          <button type="button" onClick={openPrintableView}>
             Download PDF (A4)
           </button>
           <button type="button" onClick={downloadTxt}>
