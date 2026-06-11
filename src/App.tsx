@@ -47,19 +47,22 @@ const buildPrintDocument = (items: Silimoji[]) => {
     body { font-family: Inter, Arial, sans-serif; color: #111; margin: 0; }
     h1 { margin: 0 0 8px; font-size: 18px; }
     p { margin: 0 0 10px; font-size: 12px; color: #444; }
+    .print-action { margin: 0 0 12px; }
+    .print-action button { font: inherit; border: 1px solid #d4d4d4; background: #fff; padding: 4px 10px; border-radius: 6px; cursor: pointer; }
     table { width: 100%; border-collapse: collapse; font-size: 11px; }
     th, td { border: 1px solid #d4d4d4; text-align: left; padding: 6px; vertical-align: top; }
     th { background: #f5f5f5; }
+    @media print { .print-action { display: none; } }
   </style>
 </head>
 <body>
   <h1>Silimoji Commit Reference</h1>
   <p>Filtered list prepared for A4 print or PDF export.</p>
+  <div class="print-action"><button type="button" onclick="window.print()">Print / Save as PDF</button></div>
   <table>
     <thead><tr><th>Emoji</th><th>Shortcode</th><th>Title</th><th>Description</th><th>Category</th></tr></thead>
     <tbody>${rows}</tbody>
   </table>
-  <script>window.onload = () => window.print();</script>
 </body>
 </html>`
 }
@@ -152,7 +155,7 @@ function App() {
   const downloadPdf = () => {
     const printWindow = window.open('', '_blank', 'noopener,noreferrer')
     if (!printWindow) {
-      setCopied('Popup blocked')
+      setCopied('Please allow popups to open PDF view')
       window.setTimeout(() => setCopied(''), 1000)
       return
     }
