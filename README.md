@@ -1,2 +1,49 @@
 # silimoji
-GitMoji but for silicon devs - An emoji guide for hardware development commits.
+
+A silicon-flavored emoji guide for hardware development commits.
+
+`silimoji` is a curated Gitmoji-inspired guide for RTL, verification, timing closure, PPA, Python tooling, scripts, CI, infrastructure, dependencies, and normal Git workflow.
+
+It preserves standard Gitmoji meanings and adds hardware-specific entries for critical-path cuts, CDC, backpressure, datapaths, arbitration, PPA, debug visibility, board bring-up, and IP/tool updates.
+
+## Why?
+
+Hardware commits often describe intent that normal software-focused commit emojis do not capture well:
+
+- cutting a critical path
+- fixing CDC
+- propagating backpressure
+- reducing area
+- reducing power
+- adding probes or waveform visibility
+- updating included IPs
+- changing RTL interfaces
+- improving simulation and synthesis scripts
+
+`silimoji` gives those changes a compact visual language.
+
+## Commit format
+
+```text
+<intention> [scope?]: <message>
+```
+
+Examples:
+
+```text
+:scissors: execute: split multiplier bypass path
+:bridge_at_night: uart: synchronize rx_valid into core clock
+:rightwards_pushing_hand: axi: propagate downstream backpressure
+:chart_with_downwards_trend: decode: share immediate extraction logic
+```
+
+## Author
+
+Lionnus Kesting
+PhD student at ETH Zurich, IIS
+
+## Contributing
+
+Contributions are welcome.
+
+Please keep the list curated, intentional, and compatible with standard Gitmoji meanings.
