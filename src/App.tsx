@@ -21,6 +21,7 @@ const filters: Filter[] = [
 ]
 
 const repositoryUrl = 'https://github.com/lionnus/silimoji'
+const gitmojiUrl = 'https://gitmoji.dev/'
 const instructionsTxtUrl = `${import.meta.env.BASE_URL}silimoji-instructions.txt`
 const PRINT_CLEANUP_TIMEOUT_MS = 60_000
 
@@ -43,7 +44,7 @@ const buildPrintDocument = (items: Silimoji[]) => {
 <html>
 <head>
   <meta charset="UTF-8" />
-  <title>Silimoji A4 Sheet</title>
+  <title>Chipmoji A4 Sheet</title>
   <style>
     @page { size: A4; margin: 12mm; }
     body { font-family: Inter, Arial, sans-serif; color: #111; margin: 0; }
@@ -58,7 +59,7 @@ const buildPrintDocument = (items: Silimoji[]) => {
   </style>
 </head>
 <body>
-  <h1>Silimoji Commit Reference</h1>
+  <h1>Chipmoji Commit Reference</h1>
   <p>Filtered list prepared for A4 print or PDF export.</p>
   <div class="print-action"><button type="button" onclick="window.print()">Print / Save as PDF</button></div>
   <table>
@@ -202,7 +203,7 @@ function App() {
   return (
     <main className="app">
       <header className="topbar">
-        <h1>silimoji</h1>
+        <h1>Chipmoji</h1>
       </header>
 
       <section className="controls">
@@ -212,7 +213,7 @@ function App() {
           value={search}
           onChange={(event) => setSearch(event.target.value)}
           placeholder="Search emoji, shortcode, title, description, category, alias, or example"
-          aria-label="Search silimojis"
+          aria-label="Search chipmojis"
         />
         <p className="hint">/ focus · Esc clear · Enter copy first visible shortcode</p>
         <div className="filters">
@@ -260,6 +261,13 @@ function App() {
             GitHub repository
           </a>
         </p>
+        <p>
+          Acknowledges{' '}
+          <a href={gitmojiUrl} target="_blank" rel="noreferrer">
+            Gitmoji
+          </a>
+        </p>
+        <p className="footer-credit">Made with tape out procrastination by Lionnus Kesting</p>
       </footer>
     </main>
   )
