@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "generate:txt": "node scripts/generate-silimoji-txt.mjs",
+    "prebuild": "npm run generate:txt",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
