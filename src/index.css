@@ -129,6 +129,9 @@ button,
 }
 
 .footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
   color: var(--muted);
   margin: 1.1rem 0 0;
   font-size: 0.9rem;

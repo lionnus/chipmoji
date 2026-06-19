@@ -1,8 +1,8 @@
-# silimoji
+# Chipmoji
 
 A silicon-flavored emoji guide for hardware development commits.
 
-`silimoji` is a curated Gitmoji-inspired guide for RTL, verification, timing closure, PPA, Python tooling, scripts, CI, infrastructure, dependencies, and normal Git workflow.
+`Chipmoji` is a curated Gitmoji-inspired guide for RTL, verification, timing closure, PPA, Python tooling, scripts, CI, infrastructure, dependencies, and normal Git workflow.
 
 It preserves standard Gitmoji meanings and adds hardware-specific entries for critical-path cuts, CDC, backpressure, datapaths, arbitration, PPA, debug visibility, board bring-up, and IP/tool updates.
 
@@ -20,7 +20,7 @@ Hardware commits often describe intent that normal software-focused commit emoji
 - changing RTL interfaces
 - improving simulation and synthesis scripts
 
-`silimoji` gives those changes a compact visual language.
+`Chipmoji` gives those changes a compact visual language.
 
 ## Commit format
 
