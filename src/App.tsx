@@ -107,6 +107,26 @@ function App() {
     return [...grouped.entries()]
   }, [visible])
 
+  // Distribute the category groups across a fixed number of explicit columns,
+  // balancing by entry count. We build the columns ourselves rather than using
+  // CSS multi-column, because multicol prints unreliably on mobile browsers
+  // (it can collapse to a single column spread over many pages). Explicit
+  // flex columns render identically on every device.
+  const printColumns = useMemo(() => {
+    const columnCount = 4
+    const columns = Array.from({ length: columnCount }, () => ({
+      groups: [] as typeof groupedVisible,
+      load: 0,
+    }))
+    for (const group of groupedVisible) {
+      const lightest = columns.reduce((a, b) => (b.load < a.load ? b : a))
+      lightest.groups.push(group)
+      // Approximate the rendered height: one row per entry plus header overhead.
+      lightest.load += group[1].length + 2
+    }
+    return columns.map((column) => column.groups)
+  }, [groupedVisible])
+
   const copy = async (value: string) => {
     try {
       await navigator.clipboard.writeText(value)
@@ -269,31 +289,35 @@ function App() {
         </header>
 
         <div className="print-columns">
-          {groupedVisible.map(([category, entries]) => {
-            const color = categoryColors[category]
-            return (
-              <section className="print-group" key={category}>
-                <h2 style={{ color }}>
-                  {category}
-                  <span className="print-count" style={{ color, background: `${color}1f` }}>
-                    {entries.length}
-                  </span>
-                </h2>
-                <div className="print-grid">
-                  {entries.map((item) => (
-                    <div className="print-card" key={item.shortcode}>
-                      <div className="print-card-head">
-                        <span className="print-emoji">{item.emoji}</span>
-                        <code className="print-code">{item.shortcode}</code>
-                      </div>
-                      <span className="print-rule" style={{ background: color }} />
-                      <span className="print-desc">{item.description}</span>
+          {printColumns.map((groups, columnIndex) => (
+            <div className="print-col" key={columnIndex}>
+              {groups.map(([category, entries]) => {
+                const color = categoryColors[category]
+                return (
+                  <section className="print-group" key={category}>
+                    <h2 style={{ color }}>
+                      {category}
+                      <span className="print-count" style={{ color, background: `${color}1f` }}>
+                        {entries.length}
+                      </span>
+                    </h2>
+                    <div className="print-grid">
+                      {entries.map((item) => (
+                        <div className="print-card" key={item.shortcode}>
+                          <div className="print-card-head">
+                            <span className="print-emoji">{item.emoji}</span>
+                            <code className="print-code">{item.shortcode}</code>
+                          </div>
+                          <span className="print-rule" style={{ background: color }} />
+                          <span className="print-desc">{item.description}</span>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </section>
-            )
-          })}
+                  </section>
+                )
+              })}
+            </div>
+          ))}
         </div>
 
         <footer className="print-footer">

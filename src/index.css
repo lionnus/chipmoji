@@ -329,15 +329,24 @@ button,
     color: #71717a;
   }
 
-  /* Newspaper-style column flow so the full set packs onto one landscape page.
-     Cards never split; categories pack tightly to fill each column. */
+  /* Explicit flex columns (built in JS) rather than CSS multi-column, which
+     mobile browsers print unreliably. This renders the same on every device. */
   .print-columns {
-    columns: 4;
-    column-gap: 5mm;
+    display: flex;
+    align-items: flex-start;
+    gap: 5mm;
+  }
+
+  .print-col {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
 
   .print-group {
-    margin: 0 0 4px;
+    margin: 0;
   }
 
   .print-group h2 {
