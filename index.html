@@ -26,9 +26,32 @@
       name="twitter:description"
       content="A silicon-flavored, Gitmoji-inspired emoji guide for hardware development commits."
     />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Chipmoji",
+        "url": "https://chipmoji.lionn.us/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "description": "A silicon-flavored, Gitmoji-inspired emoji guide for hardware development commits: RTL, verification, timing, PPA, scripts, CI, and more.",
+        "author": { "@type": "Person", "name": "Lionnus Kesting" },
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <h1>Chipmoji</h1>
+      <p>
+        A silicon-flavored, Gitmoji-inspired emoji guide for hardware development commits:
+        RTL, verification, timing, PPA, Python tooling, scripts, CI, infrastructure,
+        dependencies, and normal Git workflow.
+      </p>
+      <p>This app needs JavaScript enabled to browse, search, and copy commit emojis.</p>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
