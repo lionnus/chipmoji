@@ -20,9 +20,9 @@ if (!silimojisDeclaration || !silimojisDeclaration.initializer || !ts.isArrayLit
   throw new Error(`Could not load silimojis from ${sourcePath}`)
 }
 
-const parseString = (node, field) => {
+const parseString = (node, fieldName) => {
   if (!ts.isStringLiteralLike(node)) {
-    throw new Error(`Expected string literal for ${field}`)
+    throw new Error(`Expected string literal for ${fieldName}`)
   }
   return node.text
 }

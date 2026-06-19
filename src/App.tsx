@@ -180,7 +180,7 @@ function App() {
 
       frameWindow.addEventListener('afterprint', cleanup, { once: true })
       frameWindow.focus()
-      // Wait two frames so the iframe finishes layout before the print dialog opens.
+      // Wait two frames so the iframe content is fully rendered before the print dialog opens.
       window.requestAnimationFrame(() => {
         window.requestAnimationFrame(() => {
           frameWindow.print()
