@@ -1,11 +1,34 @@
 {
-  "name": "silimoji",
+  "name": "chipmoji",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
+  "description": "A silicon-flavored, Gitmoji-inspired emoji guide for hardware development commits.",
+  "keywords": [
+    "gitmoji",
+    "chipmoji",
+    "emoji",
+    "commit",
+    "hardware",
+    "rtl",
+    "verification",
+    "asic",
+    "fpga",
+    "convention"
+  ],
+  "author": "Lionnus Kesting",
+  "license": "Apache-2.0",
+  "homepage": "https://lionnus.github.io/chipmoji/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lionnus/chipmoji.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lionnus/chipmoji/issues"
+  },
   "scripts": {
     "dev": "vite",
-    "generate:txt": "node scripts/generate-silimoji-txt.mjs",
+    "generate:txt": "node scripts/generate-chipmoji-txt.mjs",
     "prebuild": "npm run generate:txt",
     "build": "tsc -b && vite build",
     "lint": "eslint .",

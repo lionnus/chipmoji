@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { silimojis, type Silimoji } from './data/silimojis'
+import { chipmojis, type Chipmoji } from './data/chipmojis'
 import './index.css'
 
-type Filter = 'All' | 'Recommended' | Silimoji['category']
+type Filter = 'All' | 'Recommended' | Chipmoji['category']
 
 const filters: Filter[] = [
   'All',
@@ -20,9 +20,9 @@ const filters: Filter[] = [
   'Infrastructure',
 ]
 
-const repositoryUrl = 'https://github.com/lionnus/silimoji'
+const repositoryUrl = 'https://github.com/lionnus/chipmoji'
 const gitmojiUrl = 'https://gitmoji.dev/'
-const instructionsTxtUrl = `${import.meta.env.BASE_URL}silimoji-instructions.txt`
+const instructionsTxtUrl = `${import.meta.env.BASE_URL}chipmoji-instructions.txt`
 const PRINT_CLEANUP_TIMEOUT_MS = 60_000
 
 const escapeHtml = (value: string) =>
@@ -32,40 +32,147 @@ const escapeHtml = (value: string) =>
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
 
-const buildPrintDocument = (items: Silimoji[]) => {
-  const rows = items
-    .map(
-      (item) =>
-        `<tr><td>${escapeHtml(item.emoji)}</td><td>${escapeHtml(item.shortcode)}</td><td>${escapeHtml(item.title)}</td><td>${escapeHtml(item.description)}</td><td>${escapeHtml(item.category)}</td></tr>`,
-    )
+const buildPrintDocument = (items: Chipmoji[]) => {
+  const grouped = items.reduce<Map<Chipmoji['category'], Chipmoji[]>>((acc, item) => {
+    const bucket = acc.get(item.category)
+    if (bucket) {
+      bucket.push(item)
+    } else {
+      acc.set(item.category, [item])
+    }
+    return acc
+  }, new Map())
+
+  const sections = [...grouped.entries()]
+    .map(([category, entries]) => {
+      const cards = entries
+        .map(
+          (item) => `
+          <div class="card">
+            <span class="emoji">${escapeHtml(item.emoji)}</span>
+            <div class="meta">
+              <code class="code">${escapeHtml(item.shortcode)}</code>
+              <span class="desc">${escapeHtml(item.description)}</span>
+            </div>
+          </div>`,
+        )
+        .join('')
+      return `
+        <section class="group">
+          <h2>${escapeHtml(category)}<span class="count">${entries.length}</span></h2>
+          <div class="grid">${cards}</div>
+        </section>`
+    })
     .join('')
 
+  const printedOn = new Date().toLocaleDateString(undefined, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+
   return `<!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Chipmoji A4 Sheet</title>
+  <title>Chipmoji — Commit Reference</title>
   <style>
-    @page { size: A4; margin: 12mm; }
-    body { font-family: Inter, Arial, sans-serif; color: #111; margin: 0; }
-    h1 { margin: 0 0 8px; font-size: 18px; }
-    p { margin: 0 0 10px; font-size: 12px; color: #444; }
+    @page { size: A4 landscape; margin: 10mm; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: #18181b;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .sheet { padding: 4mm; }
+    .masthead {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 2px solid #863bff;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+    }
+    .masthead h1 { margin: 0; font-size: 22px; letter-spacing: -0.01em; }
+    .masthead h1 span { color: #863bff; }
+    .masthead .tagline { margin: 2px 0 0; font-size: 11px; color: #71717a; }
+    .masthead .stamp { font-size: 10px; color: #a1a1aa; text-align: right; white-space: nowrap; }
     .print-action { margin: 0 0 12px; }
-    .print-action button { font: inherit; border: 1px solid #d4d4d4; background: #fff; padding: 4px 10px; border-radius: 6px; cursor: pointer; }
-    table { width: 100%; border-collapse: collapse; font-size: 11px; }
-    th, td { border: 1px solid #d4d4d4; text-align: left; padding: 6px; vertical-align: top; }
-    th { background: #f5f5f5; }
+    .print-action button {
+      font: inherit;
+      border: 1px solid #d4d4d4;
+      background: #fff;
+      padding: 5px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .columns { columns: 3; column-gap: 14px; }
+    .group { break-inside: avoid; margin: 0 0 12px; }
+    .group h2 {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 0 0 6px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #863bff;
+    }
+    .group h2 .count {
+      font-size: 9px;
+      font-weight: 600;
+      color: #71717a;
+      background: #f4f0ff;
+      border-radius: 999px;
+      padding: 1px 6px;
+    }
+    .grid { display: flex; flex-direction: column; gap: 5px; }
+    .card {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      break-inside: avoid;
+    }
+    .emoji { font-size: 15px; line-height: 1.2; width: 18px; text-align: center; flex: none; }
+    .meta { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+    .code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 10px;
+      color: #18181b;
+      font-weight: 600;
+    }
+    .desc { font-size: 9.5px; line-height: 1.3; color: #3f3f46; }
+    footer {
+      margin-top: 8px;
+      border-top: 1px solid #e4e4e7;
+      padding-top: 6px;
+      font-size: 9px;
+      color: #a1a1aa;
+      display: flex;
+      justify-content: space-between;
+    }
     @media print { .print-action { display: none; } }
   </style>
 </head>
 <body>
-  <h1>Chipmoji Commit Reference</h1>
-  <p>Filtered list prepared for A4 print or PDF export.</p>
-  <div class="print-action"><button type="button" onclick="window.print()">Print / Save as PDF</button></div>
-  <table>
-    <thead><tr><th>Emoji</th><th>Shortcode</th><th>Title</th><th>Description</th><th>Category</th></tr></thead>
-    <tbody>${rows}</tbody>
-  </table>
+  <div class="sheet">
+    <header class="masthead">
+      <div>
+        <h1>Chip<span>moji</span></h1>
+        <p class="tagline">A silicon-flavored emoji guide for hardware development commits.</p>
+      </div>
+      <div class="stamp">${escapeHtml(String(items.length))} entries · ${escapeHtml(printedOn)}</div>
+    </header>
+    <div class="print-action"><button type="button" onclick="window.print()">Print / Save as PDF</button></div>
+    <div class="columns">${sections}</div>
+    <footer>
+      <span>github.com/lionnus/chipmoji</span>
+      <span>Format: &lt;intention&gt; [scope?]: &lt;message&gt;</span>
+    </footer>
+  </div>
 </body>
 </html>`
 }
@@ -78,7 +185,7 @@ function App() {
 
   const visible = useMemo(() => {
     const q = search.trim().toLowerCase()
-    return silimojis.filter((item) => {
+    return chipmojis.filter((item) => {
       const matchesFilter =
         filter === 'All' || (filter === 'Recommended' ? item.recommended : item.category === filter)
       if (!matchesFilter) {
@@ -141,7 +248,7 @@ function App() {
   const downloadTxt = () => {
     const link = document.createElement('a')
     link.href = instructionsTxtUrl
-    link.download = 'silimoji-instructions.txt'
+    link.download = 'chipmoji-instructions.txt'
     document.body.appendChild(link)
     link.click()
     link.remove()
@@ -262,10 +369,11 @@ function App() {
           </a>
         </p>
         <p>
-          Acknowledges{' '}
+          Thanks to{' '}
           <a href={gitmojiUrl} target="_blank" rel="noreferrer">
             Gitmoji
-          </a>
+          </a>{' '}
+          for the inspiration ❤️
         </p>
         <p className="footer-credit">Made with tape out procrastination by Lionnus Kesting</p>
       </footer>

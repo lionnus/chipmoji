@@ -1,7 +1,7 @@
-Silimoji Instructions
+Chipmoji Instructions
 
-Source of truth: src/data/silimojis.ts
-Generated from the committed silimoji data.
+Source of truth: src/data/chipmojis.ts
+Generated from the committed chipmoji data.
 
 commit format:
 <intention> [scope?]: <message>
