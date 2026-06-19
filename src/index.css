@@ -108,10 +108,50 @@ button,
 }
 
 .actions {
-  margin-top: 0.6rem;
+  margin-top: 0.7rem;
   display: flex;
+  align-items: center;
   gap: 0.45rem;
   flex-wrap: wrap;
+}
+
+.actions-label {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-right: 0.1rem;
+}
+
+.actions .action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.actions .action.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.actions .action.primary:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+
+.actions .action.secondary {
+  background: var(--panel);
+  color: var(--text);
+}
+
+.actions .action.secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .results {
@@ -159,6 +199,13 @@ button,
 
 .card-head button:hover {
   border-color: var(--accent);
+}
+
+.card-rule {
+  height: 3px;
+  width: 100%;
+  border-radius: 999px;
+  margin: 0.1rem 0;
 }
 
 .card-title {
@@ -244,7 +291,7 @@ button,
   .print-sheet {
     display: block !important;
     box-sizing: border-box;
-    padding: 11mm 12mm;
+    padding: 7mm 8mm;
     color: #18181b;
     font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
     -webkit-print-color-adjust: exact;
@@ -257,13 +304,13 @@ button,
 
   .print-masthead {
     border-bottom: 2px solid #863bff;
-    padding-bottom: 8px;
-    margin-bottom: 12px;
+    padding-bottom: 5px;
+    margin-bottom: 7px;
   }
 
   .print-masthead h1 {
     margin: 0;
-    font-size: 22px;
+    font-size: 18px;
     letter-spacing: -0.01em;
   }
 
@@ -272,54 +319,55 @@ button,
   }
 
   .print-tagline {
-    margin: 2px 0 0;
-    font-size: 11px;
+    margin: 1px 0 0;
+    font-size: 9px;
     color: #71717a;
   }
 
-  /* Keep each category block whole so it never splits across a page break.
-     Trade-off: a category that doesn't fit is pushed to the next page,
-     which can leave some whitespace at the bottom of the previous one. */
+  /* Newspaper-style column flow so the full set packs onto one landscape page.
+     Cards never split; categories pack tightly to fill each column. */
+  .print-columns {
+    columns: 4;
+    column-gap: 5mm;
+  }
+
   .print-group {
-    margin: 0 0 10px;
-    break-inside: avoid;
-    page-break-inside: avoid;
+    margin: 0 0 6px;
   }
 
   .print-group h2 {
     display: flex;
     align-items: center;
-    gap: 6px;
-    margin: 0 0 5px;
-    font-size: 10px;
+    gap: 5px;
+    margin: 0 0 3px;
+    font-size: 8.5px;
     text-transform: uppercase;
     letter-spacing: 0.07em;
-    color: #863bff;
+    /* Keep a category heading glued to its first card across a column break. */
+    break-inside: avoid;
+    break-after: avoid;
   }
 
   .print-count {
-    font-size: 8.5px;
-    font-weight: 600;
-    color: #71717a;
-    background: #f4f0ff;
+    font-size: 7.5px;
+    font-weight: 700;
     border-radius: 999px;
-    padding: 1px 6px;
+    padding: 0.5px 5px;
   }
 
-  /* Tile grid: uniform cards that flow across the page and never split. */
   .print-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(52mm, 1fr));
-    gap: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
   }
 
   .print-card {
     display: flex;
     flex-direction: column;
-    gap: 3px;
-    padding: 6px 8px;
+    gap: 2px;
+    padding: 3px 5px;
     border: 1px solid #e4e4e7;
-    border-radius: 7px;
+    border-radius: 4px;
     background: #ffffff;
     break-inside: avoid;
   }
@@ -327,33 +375,39 @@ button,
   .print-card-head {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
   }
 
   .print-emoji {
-    font-size: 16px;
+    font-size: 12px;
     line-height: 1;
   }
 
   .print-code {
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 10px;
+    font-size: 8px;
     font-weight: 600;
     color: #18181b;
     word-break: break-all;
   }
 
+  .print-rule {
+    height: 1.5px;
+    width: 100%;
+    border-radius: 999px;
+  }
+
   .print-desc {
-    font-size: 9px;
-    line-height: 1.3;
+    font-size: 7.5px;
+    line-height: 1.25;
     color: #3f3f46;
   }
 
   .print-footer {
-    margin-top: 10px;
+    margin-top: 6px;
     border-top: 1px solid #e4e4e7;
-    padding-top: 6px;
-    font-size: 9px;
+    padding-top: 5px;
+    font-size: 8px;
     color: #a1a1aa;
     display: flex;
     justify-content: space-between;
