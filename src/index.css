@@ -61,7 +61,6 @@ input {
 
 button,
 .filters button,
-.actions button,
 .results button {
   border: 1px solid var(--border);
   background: var(--panel);
@@ -107,31 +106,26 @@ button,
   border-color: var(--pill-active);
 }
 
-.actions {
-  margin-top: 0.7rem;
+.toolbar {
   display: flex;
-  align-items: center;
-  gap: 0.45rem;
   flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
-.actions-label {
-  color: var(--muted);
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-right: 0.1rem;
-}
-
-.actions .action {
+.action {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
+  border: 1px solid var(--border);
   border-radius: 999px;
-  padding: 0.4rem 0.9rem;
-  font-size: 0.88rem;
+  padding: 0.45rem 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  background: var(--panel);
+  color: var(--text);
 }
 
 .action-icon {
@@ -139,24 +133,29 @@ button,
   margin-left: -0.1rem;
 }
 
-.actions .action.primary {
+.action.primary {
   background: var(--accent);
   border-color: var(--accent);
   color: #ffffff;
 }
 
-.actions .action.primary:hover:not(:disabled) {
+.action.primary:hover:not(:disabled) {
   filter: brightness(1.05);
 }
 
-.actions .action.secondary {
-  background: var(--panel);
-  color: var(--text);
-}
-
-.actions .action.secondary:hover {
+.action.secondary:hover {
   border-color: var(--accent);
   color: var(--accent);
+}
+
+.action.star:hover {
+  border-color: #f59e0b;
+  color: #f59e0b;
+}
+
+.action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .results {
@@ -251,22 +250,6 @@ button,
   color: #ffffff;
   padding: 0.25rem 0.55rem;
   border-radius: 0.35rem;
-}
-
-@media (max-width: 640px) {
-  .actions {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .actions button {
-    width: 100%;
-  }
-}
-
-.actions button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
 }
 
 /* The print sheet is hidden on screen and only revealed when printing. */

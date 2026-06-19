@@ -21,6 +21,7 @@ const filters: Filter[] = [
 ]
 
 const repositoryUrl = 'https://github.com/lionnus/chipmoji'
+const siteUrl = 'https://chipmoji.lionn.us/'
 const gitmojiUrl = 'https://gitmoji.dev/'
 const instructionsTxtUrl = `${import.meta.env.BASE_URL}chipmoji-instructions.txt`
 
@@ -57,6 +58,39 @@ const DownloadIcon = () => (
     <path d="M12 3v11" />
     <path d="m7.5 9.5 4.5 4.5 4.5-4.5" />
     <path d="M5 20h14" />
+  </svg>
+)
+
+const ShareIcon = () => (
+  <svg
+    className="action-icon"
+    width="15"
+    height="15"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M12 15V3" />
+    <path d="m7.5 7 4.5-4.5L16.5 7" />
+    <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7" />
+  </svg>
+)
+
+const StarIcon = () => (
+  <svg
+    className="action-icon"
+    width="15"
+    height="15"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    stroke="none"
+    aria-hidden="true"
+  >
+    <path d="M12 2.5l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.8 6.2 20.9l1.1-6.5L2.6 9.3l6.5-.9z" />
   </svg>
 )
 
@@ -152,6 +186,25 @@ function App() {
     link.remove()
   }
 
+  const share = async () => {
+    const data = {
+      title: 'Chipmoji',
+      text: 'An emoji guide for chip development commits.',
+      url: siteUrl,
+    }
+    try {
+      if (navigator.share) {
+        await navigator.share(data)
+        return
+      }
+      await navigator.clipboard.writeText(siteUrl)
+      setCopied('link copied')
+      window.setTimeout(() => setCopied(''), 1000)
+    } catch {
+      // The user dismissed the share sheet, or sharing is unavailable; ignore.
+    }
+  }
+
   // The print sheet is part of the real document and styled via an `@media print`
   // stylesheet, so printing it is just `window.print()`. This avoids the blank/flaky
   // iframe approach, and `@page { margin: 0 }` suppresses the browser's own
@@ -169,6 +222,26 @@ function App() {
             An emoji guide for chip development commits.
           </p>
         </header>
+
+        <nav className="toolbar" aria-label="Actions">
+          <button
+            type="button"
+            className="action primary"
+            onClick={printSheet}
+            disabled={visible.length === 0}
+          >
+            <DownloadIcon /> PDF (A4)
+          </button>
+          <button type="button" className="action secondary" onClick={downloadTxt}>
+            <DownloadIcon /> Plain text
+          </button>
+          <button type="button" className="action secondary" onClick={() => void share()}>
+            <ShareIcon /> Share
+          </button>
+          <a className="action secondary star" href={repositoryUrl} target="_blank" rel="noreferrer">
+            <StarIcon /> Star on GitHub
+          </a>
+        </nav>
 
         <section className="controls">
           <input
@@ -191,20 +264,6 @@ function App() {
                 {pill}
               </button>
             ))}
-          </div>
-          <div className="actions">
-            <span className="actions-label">Export</span>
-            <button
-              type="button"
-              className="action primary"
-              onClick={printSheet}
-              disabled={visible.length === 0}
-            >
-              <DownloadIcon /> PDF (A4)
-            </button>
-            <button type="button" className="action secondary" onClick={downloadTxt}>
-              <DownloadIcon /> Plain text
-            </button>
           </div>
         </section>
 
