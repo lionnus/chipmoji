@@ -3,21 +3,21 @@ import { dirname, resolve } from 'node:path'
 import ts from 'typescript'
 
 const repoRoot = resolve(process.cwd())
-const sourcePath = resolve(repoRoot, 'src/data/silimojis.ts')
-const outputPath = resolve(repoRoot, 'public/silimoji-instructions.txt')
+const sourcePath = resolve(repoRoot, 'src/data/chipmojis.ts')
+const outputPath = resolve(repoRoot, 'public/chipmoji-instructions.txt')
 
 const source = readFileSync(sourcePath, 'utf8')
 const sourceFile = ts.createSourceFile(sourcePath, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS)
-const silimojisDeclaration = sourceFile.statements
+const chipmojisDeclaration = sourceFile.statements
   .filter(ts.isVariableStatement)
   .find((statement) =>
     statement.modifiers?.some((modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword),
   )?.declarationList.declarations.find(
-    (declaration) => ts.isIdentifier(declaration.name) && declaration.name.text === 'silimojis',
+    (declaration) => ts.isIdentifier(declaration.name) && declaration.name.text === 'chipmojis',
   )
 
-if (!silimojisDeclaration || !silimojisDeclaration.initializer || !ts.isArrayLiteralExpression(silimojisDeclaration.initializer)) {
-  throw new Error(`Could not load silimojis from ${sourcePath}`)
+if (!chipmojisDeclaration || !chipmojisDeclaration.initializer || !ts.isArrayLiteralExpression(chipmojisDeclaration.initializer)) {
+  throw new Error(`Could not load chipmojis from ${sourcePath}`)
 }
 
 const parseString = (node, fieldName) => {
@@ -43,7 +43,7 @@ const parseEntry = (node) => {
 
   for (const property of node.properties) {
     if (!ts.isPropertyAssignment(property) || !ts.isIdentifier(property.name)) {
-      throw new Error('Unexpected silimoji property shape')
+      throw new Error('Unexpected chipmoji property shape')
     }
 
     const key = property.name.text
@@ -71,26 +71,26 @@ const parseEntry = (node) => {
         entry[key] = property.initializer.kind === ts.SyntaxKind.TrueKeyword
         break
       default:
-        throw new Error(`Unexpected silimoji field: ${key}`)
+        throw new Error(`Unexpected chipmoji field: ${key}`)
     }
   }
 
   return entry
 }
 
-const silimojis = silimojisDeclaration.initializer.elements.map(parseEntry)
+const chipmojis = chipmojisDeclaration.initializer.elements.map(parseEntry)
 
 const lines = [
-  'Silimoji Instructions',
+  'Chipmoji Instructions',
   '',
-  'Source of truth: src/data/silimojis.ts',
-  'Generated from the committed silimoji data.',
+  'Source of truth: src/data/chipmojis.ts',
+  'Generated from the committed chipmoji data.',
   '',
   'commit format:',
   '<intention> [scope?]: <message>',
   '',
   'entries:',
-  ...silimojis.map(
+  ...chipmojis.map(
     (item) =>
       `${item.shortcode} ${item.emoji} | ${item.title} | ${item.category} | ${item.description} | aliases: ${item.aliases.length > 0 ? item.aliases.join(', ') : '-'}`,
   ),
