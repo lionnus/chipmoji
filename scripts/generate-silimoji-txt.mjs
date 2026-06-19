@@ -1,38 +1,33 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
+import vm from 'node:vm'
+import ts from 'typescript'
 
 const repoRoot = resolve(process.cwd())
 const sourcePath = resolve(repoRoot, 'src/data/silimojis.ts')
 const outputPath = resolve(repoRoot, 'public/silimoji-instructions.txt')
 
 const source = readFileSync(sourcePath, 'utf8')
-const silimojis = source
-  .split('\n')
-  .map((line) => line.trim())
-  .filter((line) => line.startsWith('{ emoji: '))
-  .map((line) => {
-    const match = line.match(
-      /^\{\s*emoji: '([^']+)',\s*shortcode: '([^']+)',\s*title: '([^']+)',\s*description: '([^']+)',\s*category: '([^']+)',\s*type: '([^']+)',\s*aliases: \[([^\]]*)\],\s*recommended: (true|false),\s*example: '([^']+)'\s*\},?$/,
-    )
+const transpiled = ts.transpileModule(source, {
+  compilerOptions: {
+    module: ts.ModuleKind.CommonJS,
+    target: ts.ScriptTarget.ES2022,
+  },
+})
 
-    if (!match) {
-      throw new Error(`Could not parse silimoji entry: ${line}`)
-    }
+const module = { exports: {} }
+const sandbox = {
+  module,
+  exports: module.exports,
+}
 
-    const aliases = [...match[7].matchAll(/'([^']+)'/g)].map((alias) => alias[1])
+vm.runInNewContext(transpiled.outputText, sandbox, { filename: sourcePath })
 
-    return {
-      emoji: match[1],
-      shortcode: match[2],
-      title: match[3],
-      description: match[4],
-      category: match[5],
-      type: match[6],
-      aliases,
-      recommended: match[8] === 'true',
-      example: match[9],
-    }
-  })
+const silimojis = module.exports.silimojis
+
+if (!Array.isArray(silimojis)) {
+  throw new Error(`Could not load silimojis from ${sourcePath}`)
+}
 
 const lines = [
   'silimoji instructions',
@@ -46,7 +41,7 @@ const lines = [
   'entries:',
   ...silimojis.map(
     (item) =>
-      `${item.shortcode} ${item.emoji} | ${item.title} | ${item.category} | ${item.description} | aliases: ${item.aliases.join(', ') || '-'}`,
+      `${item.shortcode} ${item.emoji} | ${item.title} | ${item.category} | ${item.description} | aliases: ${item.aliases.length > 0 ? item.aliases.join(', ') : '-'}`,
   ),
   '',
 ]

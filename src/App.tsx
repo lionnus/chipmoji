@@ -157,7 +157,17 @@ function App() {
     printFrame.style.height = '0'
     printFrame.style.border = '0'
 
+    let cleanupTimer: number | undefined
+    let cleanedUp = false
+
     const cleanup = () => {
+      if (cleanedUp) {
+        return
+      }
+      cleanedUp = true
+      if (cleanupTimer) {
+        window.clearTimeout(cleanupTimer)
+      }
       printFrame.remove()
     }
 
@@ -170,8 +180,12 @@ function App() {
 
       frameWindow.addEventListener('afterprint', cleanup, { once: true })
       frameWindow.focus()
-      window.setTimeout(() => frameWindow.print(), 0)
-      window.setTimeout(cleanup, PRINT_CLEANUP_TIMEOUT_MS)
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          frameWindow.print()
+        })
+      })
+      cleanupTimer = window.setTimeout(cleanup, PRINT_CLEANUP_TIMEOUT_MS)
     }
 
     document.body.appendChild(printFrame)
