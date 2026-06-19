@@ -157,7 +157,7 @@ function App() {
     printFrame.style.height = '0'
     printFrame.style.border = '0'
 
-    let cleanupTimer: ReturnType<typeof window.setTimeout> | undefined
+    let cleanupTimeoutId: ReturnType<typeof window.setTimeout> | undefined
     let cleanedUp = false
 
     const cleanup = () => {
@@ -165,8 +165,8 @@ function App() {
         return
       }
       cleanedUp = true
-      if (cleanupTimer) {
-        window.clearTimeout(cleanupTimer)
+      if (cleanupTimeoutId) {
+        window.clearTimeout(cleanupTimeoutId)
       }
       printFrame.remove()
     }
@@ -186,7 +186,7 @@ function App() {
           frameWindow.print()
         })
       })
-      cleanupTimer = window.setTimeout(cleanup, PRINT_CLEANUP_TIMEOUT_MS)
+      cleanupTimeoutId = window.setTimeout(cleanup, PRINT_CLEANUP_TIMEOUT_MS)
     }
 
     document.body.appendChild(printFrame)

@@ -1,4 +1,4 @@
-silimoji instructions
+Silimoji Instructions
 
 Source of truth: src/data/silimojis.ts
 Generated from the committed silimoji data.
