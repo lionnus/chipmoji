@@ -24,6 +24,23 @@ const repositoryUrl = 'https://github.com/lionnus/chipmoji'
 const gitmojiUrl = 'https://gitmoji.dev/'
 const instructionsTxtUrl = `${import.meta.env.BASE_URL}chipmoji-instructions.txt`
 
+// A distinct accent per category, used for the divider line on each entry and
+// the category headings in the print sheet. (A true per-emoji color isn't
+// feasible without hand-mapping every glyph, so we approximate by category.)
+const categoryColors: Record<Chipmoji['category'], string> = {
+  Git: '#f59e0b',
+  RTL: '#863bff',
+  Timing: '#ef4444',
+  PPA: '#10b981',
+  Verification: '#3b82f6',
+  Python: '#eab308',
+  Scripts: '#f97316',
+  CI: '#14b8a6',
+  Docs: '#6366f1',
+  Dependencies: '#ec4899',
+  Infrastructure: '#64748b',
+}
+
 function App() {
   const searchRef = useRef<HTMLInputElement>(null)
   const [search, setSearch] = useState('')
@@ -157,11 +174,17 @@ function App() {
             ))}
           </div>
           <div className="actions">
-            <button type="button" onClick={printSheet} disabled={visible.length === 0}>
-              Download PDF (A4)
+            <span className="actions-label">Export</span>
+            <button
+              type="button"
+              className="action primary"
+              onClick={printSheet}
+              disabled={visible.length === 0}
+            >
+              <span aria-hidden="true">↧</span> PDF (A4)
             </button>
-            <button type="button" onClick={downloadTxt}>
-              Download TXT
+            <button type="button" className="action secondary" onClick={downloadTxt}>
+              <span aria-hidden="true">↧</span> Plain text
             </button>
           </div>
         </section>
@@ -190,6 +213,7 @@ function App() {
                     {item.shortcode}
                   </button>
                 </div>
+                <span className="card-rule" style={{ background: categoryColors[item.category] }} />
                 <p className="card-title">{item.title}</p>
                 <p className="card-desc">{item.description}</p>
               </article>
@@ -226,25 +250,31 @@ function App() {
         </header>
 
         <div className="print-columns">
-          {groupedVisible.map(([category, entries]) => (
-            <section className="print-group" key={category}>
-              <h2>
-                {category}
-                <span className="print-count">{entries.length}</span>
-              </h2>
-              <div className="print-grid">
-                {entries.map((item) => (
-                  <div className="print-card" key={item.shortcode}>
-                    <div className="print-card-head">
-                      <span className="print-emoji">{item.emoji}</span>
-                      <code className="print-code">{item.shortcode}</code>
+          {groupedVisible.map(([category, entries]) => {
+            const color = categoryColors[category]
+            return (
+              <section className="print-group" key={category}>
+                <h2 style={{ color }}>
+                  {category}
+                  <span className="print-count" style={{ color, background: `${color}1f` }}>
+                    {entries.length}
+                  </span>
+                </h2>
+                <div className="print-grid">
+                  {entries.map((item) => (
+                    <div className="print-card" key={item.shortcode}>
+                      <div className="print-card-head">
+                        <span className="print-emoji">{item.emoji}</span>
+                        <code className="print-code">{item.shortcode}</code>
+                      </div>
+                      <span className="print-rule" style={{ background: color }} />
+                      <span className="print-desc">{item.description}</span>
                     </div>
-                    <span className="print-desc">{item.description}</span>
-                  </div>
-                ))}
-              </div>
-            </section>
-          ))}
+                  ))}
+                </div>
+              </section>
+            )
+          })}
         </div>
 
         <footer className="print-footer">
