@@ -1,0 +1,72 @@
+silimoji instructions
+
+Source of truth: src/data/silimojis.ts
+Generated from the committed silimoji data.
+
+commit format:
+<intention> [scope?]: <message>
+
+entries:
+:tada: 🎉 | Begin project | Git | Initial commit or project bootstrap. | aliases: init, bootstrap
+:bug: 🐛 | Fix bug | Git | Fix functional bugs in RTL, verification, Python, scripts, or flow code. | aliases: fix, bugfix
+:ambulance: 🚑 | Critical hotfix | Git | Fix urgent breakage: failing regression, broken CI, lab blocker, release blocker, or tapeout blocker. | aliases: urgent, hotfix
+:sparkles: ✨ | New feature | Git | Add a complete new feature. | aliases: feature
+:construction: 🚧 | Work in progress | Git | Commit incomplete work intentionally. | aliases: wip
+:boom: 💥 | Breaking change | Git | Breaking interface, register map, protocol, API, timing contract, or CLI change. | aliases: breaking
+:recycle: ♻️ | Refactor | Git | Refactor without intended behavior change. | aliases: cleanup
+:art: 🎨 | Improve structure | Git | Improve structure, formatting, naming, or readability without behavior change. | aliases: style, format
+:fire: 🔥 | Remove code | Git | Remove obsolete code, files, stale scripts, or generated artifacts. | aliases: delete, remove
+:coffin: ⚰️ | Remove dead code | Git | Remove dead signals, unreachable FSM states, unused functions, or obsolete helpers. | aliases: deadcode
+:wastebasket: 🗑️ | Deprecate | Git | Deprecate code or behavior that should be removed later. | aliases: deprecated
+:truck: 🚚 | Move or rename | Git | Move or rename files, modules, packages, paths, or resources. | aliases: rename, move
+:rewind: ⏪ | Revert | Git | Revert a previous change. | aliases: rollback
+:twisted_rightwards_arrows: 🔀 | Merge branches | Git | Merge branches. Do not use for muxing, routing, or arbitration. | aliases: merge
+:see_no_evil: 🙈 | Gitignore | Git | Add or update `.gitignore`. | aliases: ignore
+:bookmark: 🔖 | Release tag | Git | Release or version tag. | aliases: release, version
+:bridge_at_night: 🌉 | CDC boundary | RTL | Clock-domain crossing, async boundary, synchronizer, handshake bridge, or reset-domain crossing. | aliases: cdc, synchronizer
+:rightwards_pushing_hand: 🫸 | Backpressure | RTL | Valid/ready pushback, stall propagation, skid buffers, flow control, or downstream backpressure. | aliases: stall, flow control
+:electric_plug: 🔌 | Interface hookup | RTL | Wire ports, buses, protocols, register interfaces, AXI/APB/TileLink/Wishbone connections, or top-level integration. | aliases: integration, bus
+:abacus: 🧮 | Datapath | RTL | Arithmetic, bit-width, fixed-point, saturation, rounding, accumulator, multiplier, divider, or datapath logic. | aliases: arithmetic, width
+:vertical_traffic_light: 🚦 | Arbitration | RTL | Arbitration, priority, scheduling, traffic shaping, QoS, credits, or grant logic. | aliases: scheduler, priority
+:compass: 🧭 | Address/topology map | RTL | Address maps, memory maps, topology, routing tables, NoC coordinates, or integration direction. | aliases: address map, topology
+:dna: 🧬 | Parameterization | RTL | Generics, parameters, SKUs, feature variants, configurable widths/depths, or generated RTL variants. | aliases: configurable, variants
+:fire_extinguisher: 🧯 | Hardware hazard fix | RTL | Fix X-prop, glitch risk, unsafe reset behavior, metastability risk, race, or silicon-escape-class hazard. | aliases: hazard, x-prop
+:magnet: 🧲 | Board bring-up | RTL | Board-level work, IO, pins, PHYs, lab-only fixes, FPGA bring-up, or constraints tied to real hardware. | aliases: fpga, board
+:satellite_antenna: 📡 | External protocol | RTL | PCIe, Ethernet, DDR, SerDes, SPI, I2C, UART, or other external protocol/link behavior. | aliases: protocol, link
+:safety_pin: 🧷 | Local workaround | RTL | Small localized hardware workaround or mitigation for a known issue. | aliases: workaround, mitigation
+:screwdriver: 🪛 | Tiny RTL fix | RTL | Small mechanical RTL adjustment too narrow for a bigger category. | aliases: small fix
+:zap: ⚡ | Improve performance | PPA | Improve speed, throughput, latency, benchmark result, or runtime. | aliases: perf, latency
+:scissors: ✂️ | Cut critical path | Timing | Reduce combinational depth, retime logic, split paths, or improve Fmax. | aliases: critical path, fmax
+:stopwatch: ⏱️ | Measure cycles | Timing | Benchmark instrumentation, cycle counting, latency measurement, or timing measurement infrastructure. | aliases: benchmark, measure
+:chart_with_downwards_trend: 📉 | Reduce area | PPA | Reduce LUTs, FFs, gates, SRAM, BRAM, DSPs, cells, or general resource usage. | aliases: area, lut
+:chart_with_upwards_trend: 📈 | Intentional PPA increase | PPA | Accept area, power, or resource increase intentionally for feature, timing, verification, or performance. | aliases: tradeoff
+:battery: 🔋 | Reduce power | PPA | Clock gating, power gating, idle behavior, low-power mode, activity reduction, or power optimization. | aliases: power, clock gating
+:white_check_mark: ✅ | Tests | Verification | Add, update, or fix passing tests, regressions, assertions, formal checks, or checkers. | aliases: tests, regression
+:test_tube: 🧪 | Failing reproducer | Verification | Add a failing test or reproducer for a known bug. | aliases: reproducer, failing test
+:rotating_light: 🚨 | Fix warnings | Verification | Fix compiler, linter, CDC, synthesis, simulation, or timing warnings. | aliases: warnings, lint
+:game_die: 🎲 | Random verification | Verification | Randomized testing, constrained-random stimulus, fuzzing, seeds, or randomized regressions. | aliases: random, fuzz
+:microscope: 🔬 | Debug visibility | Verification | Add probes, traces, counters, waveform hooks, debug CSRs, or observability. | aliases: probes, observability
+:safety_vest: 🦺 | Validation | Verification | Add validation, guards, illegal-state checks, protocol checks, or defensive checks. | aliases: checks, guards
+:seedling: 🌱 | Test data | Verification | Add seed files, sample inputs, golden data, or deterministic regression data. | aliases: golden data, samples
+:snake: 🐍 | Python tooling | Python | Python-specific implementation work when no more precise standard Gitmoji applies. | aliases: python
+:label: 🏷️ | Types | Python | Add or update Python type hints, dataclasses, TypedDicts, Pydantic models, SV typedefs, enums, or structs. | aliases: typing, typed
+:goal_net: 🥅 | Error handling | Python | Improve exceptions, parser errors, failure handling, or user-facing error messages. | aliases: exceptions, errors
+:monocle_face: 🧐 | Inspection | Python | Data exploration, report inspection, one-off analysis, or investigation scripts. | aliases: analysis, inspect
+:thread: 🧵 | Parallelism | Python | Threading, multiprocessing, async, job queues, or concurrent report processing. | aliases: concurrency, async
+:hammer: 🔨 | Scripts | Scripts | Build, sim, synth, lint, formal, regression, packaging, or helper scripts. | aliases: automation
+:wrench: 🔧 | Configuration | Scripts | Tool config, environment config, CLI config, YAML/TOML/JSON config, synthesis/sim flags, or parameters. | aliases: config
+:construction_worker: 👷 | CI | CI | CI pipelines, GitHub Actions, build matrix, scheduled jobs, or regression automation. | aliases: pipeline, actions
+:green_heart: 💚 | Fix CI | CI | Fix broken CI, regression automation, build matrix, or tool-cache issue. | aliases: ci fix
+:bricks: 🧱 | Infrastructure | Infrastructure | Hardware-flow infrastructure: runners, artifact storage, caches, job orchestration, or shared tool setup. | aliases: infra, runner
+:package: 📦 | Package artifact | Infrastructure | Add or update generated bundles, packaged IP, release artifacts, reports, or bitstreams. | aliases: artifact, bundle
+:arrow_up: ⬆️ | Upgrade dependency | Dependencies | Upgrade dependency, vendor IP, tool version, package, or submodule. | aliases: upgrade, deps
+:arrow_down: ⬇️ | Downgrade dependency | Dependencies | Downgrade dependency, vendor IP, tool version, package, or submodule. | aliases: downgrade, deps
+:pushpin: 📌 | Pin dependency | Dependencies | Pin exact versions of tools, IPs, packages, lockfiles, containers, or submodules. | aliases: pin, lock
+:heavy_plus_sign: ➕ | Add dependency | Dependencies | Add a dependency, package, included IP, submodule, or tool requirement. | aliases: add dep
+:heavy_minus_sign: ➖ | Remove dependency | Dependencies | Remove a dependency, package, included IP, submodule, or tool requirement. | aliases: remove dep
+:alien: 👽 | External tool/IP change | Dependencies | Update code due to external API, protocol, vendor IP, tool output, or report-format changes. | aliases: vendor, external
+:memo: 📝 | Documentation | Docs | Add or update docs, specs, register maps, integration notes, or README content. | aliases: docs
+:bulb: 💡 | Comments | Docs | Add or update source comments explaining hardware behavior, assumptions, or constraints. | aliases: comment
+:pencil2: ✏️ | Typo | Docs | Fix typos in docs, comments, specs, or messages. | aliases: typo
+:page_facing_up: 📄 | License | Docs | Add or update license. | aliases: license
+

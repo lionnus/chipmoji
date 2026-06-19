@@ -21,6 +21,7 @@ const filters: Filter[] = [
 ]
 
 const repositoryUrl = 'https://github.com/lionnus/silimoji'
+const instructionsTxtUrl = `${import.meta.env.BASE_URL}silimoji-instructions.txt`
 
 const escapeHtml = (value: string) =>
   value
@@ -136,32 +137,50 @@ function App() {
   }, [visible])
 
   const downloadTxt = () => {
-    const header = 'Silimoji concise instructions\n\n'
-    const instructions = visible
-      .map(
-        (item) =>
-          `${item.shortcode} ${item.emoji} - Use for ${item.title.toLowerCase()}. ${item.description}`,
-      )
-      .join('\n')
-    const blob = new Blob([header, instructions], { type: 'text/plain;charset=utf-8' })
-    const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
-    link.href = url
+    link.href = instructionsTxtUrl
     link.download = 'silimoji-instructions.txt'
+    document.body.appendChild(link)
     link.click()
-    URL.revokeObjectURL(url)
+    link.remove()
   }
 
   const openPrintableView = () => {
-    const printWindow = window.open('', '_blank', 'noopener,noreferrer')
-    if (!printWindow) {
+    const printFrame = document.createElement('iframe')
+    printFrame.setAttribute('aria-hidden', 'true')
+    printFrame.tabIndex = -1
+    printFrame.style.position = 'fixed'
+    printFrame.style.right = '0'
+    printFrame.style.bottom = '0'
+    printFrame.style.width = '0'
+    printFrame.style.height = '0'
+    printFrame.style.border = '0'
+
+    const cleanup = () => {
+      printFrame.remove()
+    }
+
+    printFrame.onload = () => {
+      const frameWindow = printFrame.contentWindow
+      if (!frameWindow) {
+        cleanup()
+        return
+      }
+
+      frameWindow.addEventListener('afterprint', cleanup, { once: true })
+      frameWindow.focus()
+      window.setTimeout(() => frameWindow.print(), 0)
+      window.setTimeout(cleanup, 60_000)
+    }
+
+    document.body.appendChild(printFrame)
+    printFrame.srcdoc = buildPrintDocument(visible)
+
+    if (!printFrame.contentWindow) {
       setCopied('Please allow popups to open PDF view')
       window.setTimeout(() => setCopied(''), 1000)
       return
     }
-    printWindow.document.open()
-    printWindow.document.write(buildPrintDocument(visible))
-    printWindow.document.close()
   }
 
   return (
