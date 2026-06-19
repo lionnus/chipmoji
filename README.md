@@ -4,7 +4,7 @@
   <p><strong>A silicon-flavored, Gitmoji-inspired emoji guide for hardware development commits.</strong></p>
 
   <p>
-    <a href="https://lionnus.github.io/chipmoji/"><img alt="Live site" src="https://img.shields.io/badge/live-chipmoji-863bff" /></a>
+    <a href="https://chipmoji.lionn.us/"><img alt="Live site" src="https://img.shields.io/badge/live-chipmoji-863bff" /></a>
     <a href="./LICENSE"><img alt="License: Apache-2.0" src="https://img.shields.io/badge/license-Apache--2.0-blue" /></a>
     <img alt="Built with React + Vite" src="https://img.shields.io/badge/react%20%2B%20vite-19-61dafb" />
     <a href="./CONTRIBUTING.md"><img alt="Contributions welcome" src="https://img.shields.io/badge/contributions-welcome-brightgreen" /></a>
@@ -21,7 +21,7 @@ It preserves standard Gitmoji meanings and adds hardware-specific entries for cr
 cuts, CDC, backpressure, datapaths, arbitration, PPA, debug visibility, board bring-up, and
 IP/tool updates.
 
-👉 **[Browse the guide at lionnus.github.io/chipmoji](https://lionnus.github.io/chipmoji/)**
+👉 **[Browse the guide at chipmoji.lionn.us](https://chipmoji.lionn.us/)**
 
 ## Table of contents
 
