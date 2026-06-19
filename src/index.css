@@ -9,6 +9,8 @@
   --pill: #f7f7f7;
   --pill-active: #111111;
   --pill-active-text: #ffffff;
+  --accent: #863bff;
+  --accent-soft: #f4f0ff;
 }
 
 * {
@@ -37,11 +39,24 @@ input {
 }
 
 .topbar {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.9rem;
 }
 
-.topbar h1 {
+.logo {
   margin: 0;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.logo span {
+  color: var(--accent);
+}
+
+.tagline {
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
 }
 
 button,
@@ -100,32 +115,67 @@ button,
 }
 
 .results {
-  margin-top: 0.6rem;
+  margin-top: 0.7rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.6rem;
+}
+
+.card {
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
+  gap: 0.35rem;
+  border: 1px solid var(--border);
+  border-radius: 0.7rem;
+  padding: 0.7rem 0.8rem;
+  background: var(--panel);
 }
 
-.row {
-  display: grid;
-  grid-template-columns: auto auto 1fr;
-  gap: 0.45rem;
-  align-items: flex-start;
-  border-top: 1px solid var(--border);
-  padding-top: 0.5rem;
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
-.row p {
-  margin: 0.25rem 0 0;
+.card-head button {
+  border: 1px solid var(--border);
+  border-radius: 0.45rem;
+  background: var(--pill);
+  padding: 0.18rem 0.45rem;
+  cursor: pointer;
 }
 
-.row button {
-  font-size: 0.9rem;
-  min-width: 3.1rem;
+.card-emoji {
+  font-size: 1.1rem;
+  line-height: 1;
 }
 
-.row strong {
+.card-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.82rem;
   font-weight: 600;
+  color: var(--accent);
+}
+
+.card-head button:hover {
+  border-color: var(--accent);
+}
+
+.card-title {
+  margin: 0;
+  font-weight: 600;
+}
+
+.card-desc {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.empty {
+  margin: 1.4rem 0;
+  color: var(--muted);
+  text-align: center;
 }
 
 .footer {
@@ -152,15 +202,6 @@ button,
 }
 
 @media (max-width: 640px) {
-  .row {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .row p {
-    grid-column: 1 / -1;
-    margin-top: 0.1rem;
-  }
-
   .actions {
     flex-direction: column;
     align-items: flex-start;
@@ -215,10 +256,6 @@ button,
   }
 
   .print-masthead {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 12px;
     border-bottom: 2px solid #863bff;
     padding-bottom: 8px;
     margin-bottom: 12px;
@@ -240,14 +277,13 @@ button,
     color: #71717a;
   }
 
-  .print-stamp {
-    font-size: 10px;
-    color: #a1a1aa;
-    white-space: nowrap;
-  }
-
+  /* Keep each category block whole so it never splits across a page break.
+     Trade-off: a category that doesn't fit is pushed to the next page,
+     which can leave some whitespace at the bottom of the previous one. */
   .print-group {
     margin: 0 0 10px;
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 
   .print-group h2 {

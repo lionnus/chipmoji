@@ -71,16 +71,6 @@ function App() {
     return [...grouped.entries()]
   }, [visible])
 
-  const printedOn = useMemo(
-    () =>
-      new Date().toLocaleDateString(undefined, {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }),
-    [],
-  )
-
   const copy = async (value: string) => {
     try {
       await navigator.clipboard.writeText(value)
@@ -136,7 +126,12 @@ function App() {
     <>
       <main className="app">
         <header className="topbar">
-          <h1>Chipmoji</h1>
+          <h1 className="logo">
+            Chip<span>moji</span>
+          </h1>
+          <p className="tagline">
+            A silicon-flavored emoji guide for hardware development commits.
+          </p>
         </header>
 
         <section className="controls">
@@ -171,21 +166,36 @@ function App() {
           </div>
         </section>
 
-        <section className="results">
-          {visible.map((item) => (
-            <article className="row" key={item.shortcode}>
-              <button type="button" onClick={() => void copy(item.emoji)}>
-                {item.emoji}
-              </button>
-              <button type="button" onClick={() => void copy(item.shortcode)}>
-                {item.shortcode}
-              </button>
-              <p>
-                <strong>{item.title}</strong> · {item.description}
-              </p>
-            </article>
-          ))}
-        </section>
+        {visible.length === 0 ? (
+          <p className="empty">No chipmojis match your search.</p>
+        ) : (
+          <section className="results">
+            {visible.map((item) => (
+              <article className="card" key={item.shortcode}>
+                <div className="card-head">
+                  <button
+                    type="button"
+                    className="card-emoji"
+                    onClick={() => void copy(item.emoji)}
+                    title="Copy emoji"
+                  >
+                    {item.emoji}
+                  </button>
+                  <button
+                    type="button"
+                    className="card-code"
+                    onClick={() => void copy(item.shortcode)}
+                    title="Copy shortcode"
+                  >
+                    {item.shortcode}
+                  </button>
+                </div>
+                <p className="card-title">{item.title}</p>
+                <p className="card-desc">{item.description}</p>
+              </article>
+            ))}
+          </section>
+        )}
 
         {copied && <p className="copied">Copied: {copied}</p>}
         <footer className="footer">
@@ -207,17 +217,12 @@ function App() {
 
       <div className="print-sheet" aria-hidden="true">
         <header className="print-masthead">
-          <div>
-            <h1>
-              Chip<span>moji</span>
-            </h1>
-            <p className="print-tagline">
-              A silicon-flavored emoji guide for hardware development commits.
-            </p>
-          </div>
-          <div className="print-stamp">
-            {visible.length} entries · {printedOn}
-          </div>
+          <h1>
+            Chip<span>moji</span>
+          </h1>
+          <p className="print-tagline">
+            A silicon-flavored emoji guide for hardware development commits.
+          </p>
         </header>
 
         <div className="print-columns">
