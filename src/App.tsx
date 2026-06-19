@@ -22,6 +22,7 @@ const filters: Filter[] = [
 
 const repositoryUrl = 'https://github.com/lionnus/silimoji'
 const instructionsTxtUrl = `${import.meta.env.BASE_URL}silimoji-instructions.txt`
+const PRINT_CLEANUP_TIMEOUT_MS = 60_000
 
 const escapeHtml = (value: string) =>
   value
@@ -170,14 +171,14 @@ function App() {
       frameWindow.addEventListener('afterprint', cleanup, { once: true })
       frameWindow.focus()
       window.setTimeout(() => frameWindow.print(), 0)
-      window.setTimeout(cleanup, 60_000)
+      window.setTimeout(cleanup, PRINT_CLEANUP_TIMEOUT_MS)
     }
 
     document.body.appendChild(printFrame)
     printFrame.srcdoc = buildPrintDocument(visible)
 
     if (!printFrame.contentWindow) {
-      setCopied('Please allow popups to open PDF view')
+      setCopied('Failed to initialize print preview')
       window.setTimeout(() => setCopied(''), 1000)
       return
     }

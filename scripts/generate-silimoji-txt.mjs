@@ -6,21 +6,33 @@ const sourcePath = resolve(repoRoot, 'src/data/silimojis.ts')
 const outputPath = resolve(repoRoot, 'public/silimoji-instructions.txt')
 
 const source = readFileSync(sourcePath, 'utf8')
-const startMarker = 'export const silimojis: Silimoji[] = ['
-const startIndex = source.indexOf(startMarker)
+const silimojis = source
+  .split('\n')
+  .map((line) => line.trim())
+  .filter((line) => line.startsWith('{ emoji: '))
+  .map((line) => {
+    const match = line.match(
+      /^\{\s*emoji: '([^']+)',\s*shortcode: '([^']+)',\s*title: '([^']+)',\s*description: '([^']+)',\s*category: '([^']+)',\s*type: '([^']+)',\s*aliases: \[([^\]]*)\],\s*recommended: (true|false),\s*example: '([^']+)'\s*\},?$/,
+    )
 
-if (startIndex === -1) {
-  throw new Error(`Could not find silimoji data in ${sourcePath}`)
-}
+    if (!match) {
+      throw new Error(`Could not parse silimoji entry: ${line}`)
+    }
 
-const arrayStart = source.indexOf('[', startIndex)
-const arrayEnd = source.lastIndexOf('];')
+    const aliases = [...match[7].matchAll(/'([^']+)'/g)].map((alias) => alias[1])
 
-if (arrayStart === -1 || arrayEnd === -1 || arrayEnd <= arrayStart) {
-  throw new Error(`Could not parse silimoji array in ${sourcePath}`)
-}
-
-const silimojis = Function(`"use strict"; return (${source.slice(arrayStart, arrayEnd + 1)})`)()
+    return {
+      emoji: match[1],
+      shortcode: match[2],
+      title: match[3],
+      description: match[4],
+      category: match[5],
+      type: match[6],
+      aliases,
+      recommended: match[8] === 'true',
+      example: match[9],
+    }
+  })
 
 const lines = [
   'silimoji instructions',
