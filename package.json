@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "A silicon-flavored, Gitmoji-inspired emoji guide for hardware development commits.",
+  "description": "An emoji guide for chip development commits.",
   "keywords": [
     "gitmoji",
     "chipmoji",

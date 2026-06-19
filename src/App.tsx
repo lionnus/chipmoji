@@ -41,6 +41,25 @@ const categoryColors: Record<Chipmoji['category'], string> = {
   Infrastructure: '#64748b',
 }
 
+const DownloadIcon = () => (
+  <svg
+    className="action-icon"
+    width="15"
+    height="15"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M12 3v11" />
+    <path d="m7.5 9.5 4.5 4.5 4.5-4.5" />
+    <path d="M5 20h14" />
+  </svg>
+)
+
 function App() {
   const searchRef = useRef<HTMLInputElement>(null)
   const [search, setSearch] = useState('')
@@ -147,7 +166,7 @@ function App() {
             Chip<span>moji</span>
           </h1>
           <p className="tagline">
-            A silicon-flavored emoji guide for hardware development commits.
+            An emoji guide for chip development commits.
           </p>
         </header>
 
@@ -181,10 +200,10 @@ function App() {
               onClick={printSheet}
               disabled={visible.length === 0}
             >
-              <span aria-hidden="true">↧</span> PDF (A4)
+              <DownloadIcon /> PDF (A4)
             </button>
             <button type="button" className="action secondary" onClick={downloadTxt}>
-              <span aria-hidden="true">↧</span> Plain text
+              <DownloadIcon /> Plain text
             </button>
           </div>
         </section>
@@ -245,7 +264,7 @@ function App() {
             Chip<span>moji</span>
           </h1>
           <p className="print-tagline">
-            A silicon-flavored emoji guide for hardware development commits.
+            An emoji guide for chip development commits.
           </p>
         </header>
 

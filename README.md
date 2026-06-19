@@ -1,7 +1,7 @@
 <div align="center">
   <img src="./public/favicon.svg" width="72" alt="Chipmoji logo" />
   <h1>Chipmoji</h1>
-  <p><strong>A silicon-flavored, Gitmoji-inspired emoji guide for hardware development commits.</strong></p>
+  <p><strong>An emoji guide for chip development commits.</strong></p>
 
   <p>
     <a href="https://chipmoji.lionn.us/"><img alt="Live site" src="https://img.shields.io/badge/live-chipmoji-863bff" /></a>
