@@ -21,6 +21,7 @@ const sandbox = {
   exports: module.exports,
 }
 
+// The build processes a committed repository file, so executing this transpiled module is safe here.
 vm.runInNewContext(transpiled.outputText, sandbox, { filename: sourcePath })
 
 const silimojis = module.exports.silimojis

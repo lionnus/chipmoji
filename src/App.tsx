@@ -157,7 +157,7 @@ function App() {
     printFrame.style.height = '0'
     printFrame.style.border = '0'
 
-    let cleanupTimer: number | undefined
+    let cleanupTimer: ReturnType<typeof window.setTimeout> | undefined
     let cleanedUp = false
 
     const cleanup = () => {
@@ -180,6 +180,7 @@ function App() {
 
       frameWindow.addEventListener('afterprint', cleanup, { once: true })
       frameWindow.focus()
+      // Wait two frames so the iframe finishes layout before the print dialog opens.
       window.requestAnimationFrame(() => {
         window.requestAnimationFrame(() => {
           frameWindow.print()
