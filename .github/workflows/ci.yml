@@ -31,5 +31,5 @@ jobs:
         run: npm run lint
       - name: Build
         run: npm run build
-      - name: Verify TXT export is up to date
-        run: git diff --exit-code -- public/chipmoji-instructions.txt
+      - name: Verify generated exports are up to date
+        run: git diff --exit-code -- public/chipmoji-instructions.txt public/chipmoji-a4-landscape.pdf public/chipmoji-a4-portrait.pdf

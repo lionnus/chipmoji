@@ -71,8 +71,10 @@ Examples:
 - **Search** across emoji, shortcode, title, description, category, alias, or example.
 - **Filter** by category or by the curated `Recommended` set.
 - **Click** any emoji or shortcode to copy it to the clipboard.
-- **Download PDF (A4)** for a print-ready, landscape cheat sheet grouped by category.
-- **Download TXT** for a plain-text reference you can drop into a repo or editor snippet.
+- **Download a PDF cheat sheet** — pick **landscape** (everything on one A4 page) or
+  **portrait**. These are pre-generated files, so the result is identical on every device.
+- **Download the plain-text** reference to drop into a repo or editor snippet.
+- **Share** the site (native share sheet on mobile) or **star it on GitHub**.
 
 ### Keyboard shortcuts
 
@@ -99,10 +101,18 @@ via [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml).
 
 ## How the data flows
 
-The single source of truth is [`src/data/chipmojis.ts`](./src/data/chipmojis.ts). The plain-text
-export at [`public/chipmoji-instructions.txt`](./public/chipmoji-instructions.txt) is generated
-from it by [`scripts/generate-chipmoji-txt.mjs`](./scripts/generate-chipmoji-txt.mjs) and is
-regenerated automatically on `npm run build`. Edit the data file, never the generated TXT.
+The single source of truth is [`src/data/chipmojis.ts`](./src/data/chipmojis.ts). Two kinds of
+export are generated from it and committed under `public/`:
+
+- the plain-text reference `chipmoji-instructions.txt`
+  ([`scripts/generate-chipmoji-txt.mjs`](./scripts/generate-chipmoji-txt.mjs))
+- the landscape and portrait A4 PDF cheat sheets
+  ([`scripts/generate-chipmoji-pdf.mjs`](./scripts/generate-chipmoji-pdf.mjs)) — rendered with
+  pdfkit and color [Twemoji](https://github.com/twitter/twemoji) glyphs, fully deterministic so
+  they look the same on every device
+
+Both run on `npm run build` (and `npm run generate`). Edit the data file, never the generated
+exports — CI fails if they are out of date.
 
 ## Contributing
 
@@ -113,6 +123,9 @@ Keep the list curated, intentional, and compatible with standard Gitmoji meaning
 ## Acknowledgements
 
 Thanks to [Gitmoji](https://gitmoji.dev/) for the inspiration. ❤️
+
+The PDF cheat sheets embed emoji artwork from [Twemoji](https://github.com/twitter/twemoji),
+licensed under [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
 ## License
 

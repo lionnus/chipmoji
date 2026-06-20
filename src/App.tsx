@@ -24,6 +24,8 @@ const repositoryUrl = 'https://github.com/lionnus/chipmoji'
 const siteUrl = 'https://chipmoji.lionn.us/'
 const gitmojiUrl = 'https://gitmoji.dev/'
 const instructionsTxtUrl = `${import.meta.env.BASE_URL}chipmoji-instructions.txt`
+const pdfLandscapeUrl = `${import.meta.env.BASE_URL}chipmoji-a4-landscape.pdf`
+const pdfPortraitUrl = `${import.meta.env.BASE_URL}chipmoji-a4-portrait.pdf`
 
 // A distinct accent per category, used for the divider line on each entry and
 // the category headings in the print sheet. (A true per-emoji color isn't
@@ -126,21 +128,6 @@ function App() {
     })
   }, [filter, search])
 
-  // Group the currently visible entries by category, preserving first-seen order,
-  // for the print sheet.
-  const groupedVisible = useMemo(() => {
-    const grouped = new Map<Chipmoji['category'], Chipmoji[]>()
-    for (const item of visible) {
-      const bucket = grouped.get(item.category)
-      if (bucket) {
-        bucket.push(item)
-      } else {
-        grouped.set(item.category, [item])
-      }
-    }
-    return [...grouped.entries()]
-  }, [visible])
-
   const copy = async (value: string) => {
     try {
       await navigator.clipboard.writeText(value)
@@ -177,15 +164,6 @@ function App() {
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [visible])
 
-  const downloadTxt = () => {
-    const link = document.createElement('a')
-    link.href = instructionsTxtUrl
-    link.download = 'chipmoji-instructions.txt'
-    document.body.appendChild(link)
-    link.click()
-    link.remove()
-  }
-
   const share = async () => {
     const data = {
       title: 'Chipmoji',
@@ -205,15 +183,8 @@ function App() {
     }
   }
 
-  // The print sheet is part of the real document and styled via an `@media print`
-  // stylesheet, so printing it is just `window.print()`. This avoids the blank/flaky
-  // iframe approach, and `@page { margin: 0 }` suppresses the browser's own
-  // header/footer (page title, URL, date) in the generated PDF.
-  const printSheet = () => window.print()
-
   return (
-    <>
-      <main className="app">
+    <main className="app">
         <header className="topbar">
           <h1 className="logo">
             Chip<span>moji</span>
@@ -224,17 +195,15 @@ function App() {
         </header>
 
         <nav className="toolbar" aria-label="Actions">
-          <button
-            type="button"
-            className="action primary"
-            onClick={printSheet}
-            disabled={visible.length === 0}
-          >
-            <DownloadIcon /> PDF (A4)
-          </button>
-          <button type="button" className="action secondary" onClick={downloadTxt}>
+          <a className="action primary" href={pdfLandscapeUrl} download>
+            <DownloadIcon /> PDF (landscape)
+          </a>
+          <a className="action secondary" href={pdfPortraitUrl} download>
+            <DownloadIcon /> PDF (portrait)
+          </a>
+          <a className="action secondary" href={instructionsTxtUrl} download>
             <DownloadIcon /> Plain text
-          </button>
+          </a>
           <button type="button" className="action secondary" onClick={() => void share()}>
             <ShareIcon /> Share
           </button>
@@ -316,51 +285,6 @@ function App() {
           <p className="footer-credit">Made with tape out procrastination by Lionnus Kesting</p>
         </footer>
       </main>
-
-      <div className="print-sheet" aria-hidden="true">
-        <header className="print-masthead">
-          <h1>
-            Chip<span>moji</span>
-          </h1>
-          <p className="print-tagline">
-            An emoji guide for chip development commits.
-          </p>
-        </header>
-
-        <div className="print-columns">
-          {groupedVisible.map(([category, entries]) => {
-            const color = categoryColors[category]
-            return (
-              <section className="print-group" key={category}>
-                <h2 style={{ color }}>
-                  {category}
-                  <span className="print-count" style={{ color, background: `${color}1f` }}>
-                    {entries.length}
-                  </span>
-                </h2>
-                <div className="print-grid">
-                  {entries.map((item) => (
-                    <div className="print-card" key={item.shortcode}>
-                      <div className="print-card-head">
-                        <span className="print-emoji">{item.emoji}</span>
-                        <code className="print-code">{item.shortcode}</code>
-                      </div>
-                      <span className="print-rule" style={{ background: color }} />
-                      <span className="print-desc">{item.description}</span>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )
-          })}
-        </div>
-
-        <footer className="print-footer">
-          <span>github.com/lionnus/chipmoji</span>
-          <span>{'Format: <intention> [scope?]: <message>'}</span>
-        </footer>
-      </div>
-    </>
   )
 }
 
