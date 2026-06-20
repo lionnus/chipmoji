@@ -274,7 +274,7 @@ function buildHtml(columns, { width: pageWidth, height: pageHeight }) {
 </head>
 <body>
   <header class="masthead">
-    <h1>Chip<span>moji</span></h1>
+    <h1>chip<span>moji</span></h1>
     <p class="tagline">An emoji guide for chip development commits.</p>
   </header>
   <div class="columns">${columnHtml}

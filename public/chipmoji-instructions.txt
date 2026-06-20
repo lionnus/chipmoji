@@ -1,12 +1,11 @@
-Chipmoji Instructions
+chipmoji — An emoji guide for chip development commits
+https://github.com/lionnus/chipmoji
+License: Apache-2.0
 
-Source of truth: src/data/chipmojis.ts
-Generated from the committed chipmoji data.
+Use the shortcode (e.g. :bug:) as the first token of your commit message.
+Format: <intention> [scope?]: <message>
+Example: :bug: alu: fix signed overflow flag
 
-commit format:
-<intention> [scope?]: <message>
-
-entries:
 :tada: 🎉 | Begin project | Git | Initial commit or project bootstrap. | aliases: init, bootstrap
 :bug: 🐛 | Fix bug | Git | Fix functional bugs in RTL, verification, Python, scripts, or flow code. | aliases: fix, bugfix
 :ambulance: 🚑 | Critical hotfix | Git | Fix urgent breakage: failing regression, broken CI, lab blocker, release blocker, or tapeout blocker. | aliases: urgent, hotfix

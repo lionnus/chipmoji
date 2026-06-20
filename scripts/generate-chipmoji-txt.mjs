@@ -81,15 +81,14 @@ const parseEntry = (node) => {
 const chipmojis = chipmojisDeclaration.initializer.elements.map(parseEntry)
 
 const lines = [
-  'Chipmoji Instructions',
+  'chipmoji — An emoji guide for chip development commits',
+  'https://github.com/lionnus/chipmoji',
+  'License: Apache-2.0',
   '',
-  'Source of truth: src/data/chipmojis.ts',
-  'Generated from the committed chipmoji data.',
+  'Use the shortcode (e.g. :bug:) as the first token of your commit message.',
+  'Format: <intention> [scope?]: <message>',
+  'Example: :bug: alu: fix signed overflow flag',
   '',
-  'commit format:',
-  '<intention> [scope?]: <message>',
-  '',
-  'entries:',
   ...chipmojis.map(
     (item) =>
       `${item.shortcode} ${item.emoji} | ${item.title} | ${item.category} | ${item.description} | aliases: ${item.aliases.length > 0 ? item.aliases.join(', ') : '-'}`,

@@ -100,6 +100,8 @@ function App() {
   const [copied, setCopied] = useState('')
   const [shareOpen, setShareOpen] = useState(false)
   const shareRef = useRef<HTMLDivElement>(null)
+  const [pdfOpen, setPdfOpen] = useState(false)
+  const pdfRef = useRef<HTMLDivElement>(null)
 
   const visible = useMemo(() => {
     const q = search.trim().toLowerCase()
@@ -158,7 +160,7 @@ function App() {
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [visible])
 
-  const shareText = 'Chipmoji — An emoji guide for chip development commits.'
+  const shareText = 'chipmoji — An emoji guide for chip development commits.'
   const shareToX = () => {
     window.open(
       `https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(siteUrl)}`,
@@ -183,15 +185,18 @@ function App() {
   }
 
   useEffect(() => {
-    if (!shareOpen) return
+    if (!shareOpen && !pdfOpen) return
     const onClick = (e: MouseEvent) => {
-      if (shareRef.current && !shareRef.current.contains(e.target as Node)) {
+      if (shareOpen && shareRef.current && !shareRef.current.contains(e.target as Node)) {
         setShareOpen(false)
+      }
+      if (pdfOpen && pdfRef.current && !pdfRef.current.contains(e.target as Node)) {
+        setPdfOpen(false)
       }
     }
     window.addEventListener('click', onClick, true)
     return () => window.removeEventListener('click', onClick, true)
-  }, [shareOpen])
+  }, [shareOpen, pdfOpen])
 
   const downloadFile = (url: string, filename: string) => {
     const link = document.createElement('a')
@@ -206,7 +211,7 @@ function App() {
       <main className="app">
         <header className="topbar">
           <h1 className="logo">
-            Chip<span>moji</span>
+            chip<span>moji</span>
           </h1>
           <p className="tagline">
             An emoji guide for chip development commits.
@@ -214,20 +219,21 @@ function App() {
         </header>
 
       <nav className="toolbar" aria-label="Actions">
-          <button
-            type="button"
-            className="action primary"
-            onClick={() => downloadFile(pdfLandscapeUrl, 'chipmoji-landscape.pdf')}
-          >
-            <DownloadIcon /> PDF Landscape
-          </button>
-          <button
-            type="button"
-            className="action primary"
-            onClick={() => downloadFile(pdfPortraitUrl, 'chipmoji-portrait.pdf')}
-          >
-            <DownloadIcon /> PDF Portrait
-          </button>
+          <div className="share-wrapper" ref={pdfRef}>
+            <button type="button" className="action primary" onClick={() => setPdfOpen(!pdfOpen)}>
+              <DownloadIcon /> PDF for Humans
+            </button>
+            {pdfOpen && (
+              <div className="share-menu">
+                <button type="button" onClick={() => { downloadFile(pdfLandscapeUrl, 'chipmoji-landscape.pdf'); setPdfOpen(false) }}>
+                  Landscape
+                </button>
+                <button type="button" onClick={() => { downloadFile(pdfPortraitUrl, 'chipmoji-portrait.pdf'); setPdfOpen(false) }}>
+                  Portrait
+                </button>
+              </div>
+            )}
+          </div>
           <button type="button" className="action secondary" onClick={() => downloadFile(instructionsTxtUrl, 'chipmoji-instructions.txt')}>
             <DownloadIcon /> TXT for Agents
           </button>
@@ -254,8 +260,8 @@ function App() {
             type="search"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            placeholder="Search emoji, shortcode, title, description, category, alias, or example"
-            aria-label="Search chipmojis"
+            placeholder="Search all chipmojis"
+            aria-label="Search all chipmojis"
           />
           <div className="filters">
             {filters.map((pill) => (
