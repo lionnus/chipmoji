@@ -160,7 +160,7 @@ function App() {
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [visible])
 
-  const shareText = 'chipmoji — An emoji guide for chip development commits.'
+  const shareText = 'chipmoji | An emoji guide for chip development commits.'
   const shareToX = () => {
     window.open(
       `https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(siteUrl)}`,
