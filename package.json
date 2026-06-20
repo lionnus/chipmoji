@@ -1,0 +1,61 @@
+{
+  "name": "chipmoji",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "An emoji guide for chip development commits.",
+  "keywords": [
+    "gitmoji",
+    "chipmoji",
+    "emoji",
+    "commit",
+    "hardware",
+    "rtl",
+    "verification",
+    "asic",
+    "fpga",
+    "convention"
+  ],
+  "author": "Lionnus Kesting",
+  "license": "Apache-2.0",
+  "homepage": "https://chipmoji.lionn.us/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lionnus/chipmoji.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lionnus/chipmoji/issues"
+  },
+  "scripts": {
+    "dev": "vite",
+    "generate:txt": "node scripts/generate-chipmoji-txt.mjs",
+    "generate:pdf": "node scripts/generate-chipmoji-pdf.mjs",
+    "generate": "npm run generate:txt && npm run generate:pdf",
+    "prebuild": "npm run generate",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.12.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^10.3.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.6.0",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.59.2",
+    "puppeteer": "^24.9.0",
+    "vite": "^8.0.12"
+  },
+  "allowScripts": {
+    "puppeteer@24.43.1": true
+  }
+}

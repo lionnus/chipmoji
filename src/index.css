@@ -1,0 +1,290 @@
+:root {
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  line-height: 1.5;
+  --bg: #ffffff;
+  --panel: #ffffff;
+  --text: #171717;
+  --muted: #666666;
+  --border: #e5e5e5;
+  --pill: #f7f7f7;
+  --pill-active: #111111;
+  --pill-active-text: #ffffff;
+  --accent: #863bff;
+  --accent-soft: #f4f0ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.app {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 1rem 1rem 2rem;
+}
+
+.topbar {
+  margin-bottom: 0.9rem;
+}
+
+.logo {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.logo span {
+  color: var(--accent);
+}
+
+.tagline {
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+button,
+.filters button,
+.results button {
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  border-radius: 0.45rem;
+  padding: 0.32rem 0.62rem;
+  cursor: pointer;
+}
+
+.controls {
+  padding-bottom: 0.4rem;
+}
+
+.controls input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 0.45rem;
+  background: var(--panel);
+  color: var(--text);
+  padding: 0.5rem 0.6rem;
+}
+
+.filters {
+  margin-top: 0.6rem;
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.filters button {
+  background: var(--pill);
+  border-radius: 999px;
+}
+
+.filters button.active {
+  background: var(--pill-active);
+  color: var(--pill-active-text);
+  border-color: var(--pill-active);
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.45rem 0.95rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  background: var(--panel);
+  color: var(--text);
+}
+
+.action-icon {
+  flex: none;
+  margin-left: -0.1rem;
+}
+
+.action.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.action.primary:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+
+.action.secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.action.star:hover {
+  border-color: #f59e0b;
+  color: #f59e0b;
+}
+
+.action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.share-wrapper {
+  position: relative;
+}
+
+.share-menu {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  left: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+  border: 1px solid var(--border);
+  border-radius: 0.55rem;
+  background: var(--panel);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.share-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: none;
+  border-radius: 0;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  background: var(--panel);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.share-menu button:hover {
+  background: var(--pill);
+}
+
+.share-menu button + button {
+  border-top: 1px solid var(--border);
+}
+
+.results {
+  margin-top: 0.7rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.6rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  border: 1px solid var(--border);
+  border-radius: 0.7rem;
+  padding: 0.7rem 0.8rem;
+  background: var(--panel);
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.card-head button {
+  border: 1px solid var(--border);
+  border-radius: 0.45rem;
+  background: var(--pill);
+  padding: 0.18rem 0.45rem;
+  cursor: pointer;
+}
+
+.card-emoji {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.card-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.card-head button:hover {
+  border-color: var(--accent);
+}
+
+.card-rule {
+  height: 3px;
+  width: 100%;
+  border-radius: 999px;
+  margin: 0.1rem 0;
+}
+
+.card-title {
+  margin: 0;
+  font-weight: 600;
+}
+
+.card-desc {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.empty {
+  margin: 1.4rem 0;
+  color: var(--muted);
+  text-align: center;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: var(--muted);
+  margin: 1.1rem 0 0;
+  font-size: 0.9rem;
+}
+
+.footer p {
+  margin: 0;
+}
+
+.copied {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  background: #111111;
+  color: #ffffff;
+  padding: 0.25rem 0.55rem;
+  border-radius: 0.35rem;
+}
+
