@@ -5,35 +5,26 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#863bff" />
-    <title>chipmoji: An emoji guide for chip development commits</title>
-    <meta
-      name="description"
-      content="An emoji guide for chip development commits: RTL, verification, timing, PPA, scripts, CI, and more."
-    />
-    <link rel="canonical" href="https://chipmoji.lionn.us/" />
+    <title>%SITE_TITLE%</title>
+    <meta name="description" content="%SITE_DESCRIPTION%" />
+    <link rel="canonical" href="%SITE_URL%" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="chipmoji" />
-    <meta property="og:title" content="chipmoji" />
-    <meta
-      property="og:description"
-      content="An emoji guide for chip development commits."
-    />
-    <meta property="og:url" content="https://chipmoji.lionn.us/" />
+    <meta property="og:site_name" content="%SITE_NAME%" />
+    <meta property="og:title" content="%SITE_NAME%" />
+    <meta property="og:description" content="%SITE_TAGLINE%" />
+    <meta property="og:url" content="%SITE_URL%" />
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="chipmoji" />
-    <meta
-      name="twitter:description"
-      content="An emoji guide for chip development commits."
-    />
+    <meta name="twitter:title" content="%SITE_NAME%" />
+    <meta name="twitter:description" content="%SITE_TAGLINE%" />
 
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "chipmoji",
-        "url": "https://chipmoji.lionn.us/"
+        "name": "%SITE_NAME%",
+        "url": "%SITE_URL%"
       }
     </script>
 
@@ -41,11 +32,11 @@
       {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "chipmoji",
-        "url": "https://chipmoji.lionn.us/",
+        "name": "%SITE_NAME%",
+        "url": "%SITE_URL%",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Any",
-        "description": "An emoji guide for chip development commits: RTL, verification, timing, PPA, scripts, CI, and more.",
+        "description": "%SITE_DESCRIPTION%",
         "author": { "@type": "Person", "name": "Lionnus Kesting" },
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
       }
@@ -54,11 +45,8 @@
   <body>
     <div id="root"></div>
     <noscript>
-      <h1>chipmoji</h1>
-      <p>
-        An emoji guide for chip development commits: RTL, verification, timing, PPA,
-        Python tooling, scripts, CI, infrastructure, dependencies, and normal Git workflow.
-      </p>
+      <h1>%SITE_NAME%</h1>
+      <p>%SITE_DESCRIPTION%</p>
       <p>This app needs JavaScript enabled to browse, search, and copy commit emojis.</p>
     </noscript>
     <script type="module" src="/src/main.tsx"></script>

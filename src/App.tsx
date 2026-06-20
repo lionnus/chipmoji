@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { chipmojis, type Chipmoji } from './data/chipmojis'
+import { site } from './site'
 import './index.css'
 
 type Filter = 'All' | 'Recommended' | Chipmoji['category']
@@ -20,8 +21,8 @@ const filters: Filter[] = [
   'Infrastructure',
 ]
 
-const repositoryUrl = 'https://github.com/lionnus/chipmoji'
-const siteUrl = 'https://chipmoji.lionn.us/'
+const repositoryUrl = site.repository
+const siteUrl = site.url
 const gitmojiUrl = 'https://gitmoji.dev/'
 const instructionsTxtUrl = `${import.meta.env.BASE_URL}chipmoji-instructions.txt`
 const pdfLandscapeUrl = `${import.meta.env.BASE_URL}chipmoji-landscape.pdf`
@@ -160,7 +161,7 @@ function App() {
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [visible])
 
-  const shareText = 'chipmoji | An emoji guide for chip development commits.'
+  const shareText = site.shareText
   const shareToX = () => {
     window.open(
       `https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(siteUrl)}`,
@@ -213,9 +214,7 @@ function App() {
           <h1 className="logo">
             chip<span>moji</span>
           </h1>
-          <p className="tagline">
-            An emoji guide for chip development commits.
-          </p>
+          <p className="tagline">{site.taglineSentence}</p>
         </header>
 
       <nav className="toolbar" aria-label="Actions">
