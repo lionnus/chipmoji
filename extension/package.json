@@ -1,0 +1,116 @@
+{
+  "name": "chipmoji-vscode",
+  "displayName": "Chipmoji",
+  "description": "Propose the correct chip-development commit emoji from your staged changes, with autocomplete in the commit box.",
+  "version": "0.1.0",
+  "publisher": "lionnus",
+  "license": "Apache-2.0",
+  "author": "Lionnus Kesting",
+  "homepage": "https://chipmoji.lionn.us/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lionnus/chipmoji.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lionnus/chipmoji/issues"
+  },
+  "keywords": [
+    "gitmoji",
+    "chipmoji",
+    "emoji",
+    "commit",
+    "scm",
+    "hardware",
+    "rtl",
+    "asic",
+    "fpga"
+  ],
+  "categories": [
+    "SCM Providers",
+    "Other"
+  ],
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "extensionDependencies": [
+    "vscode.git"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "chipmoji.suggest",
+        "title": "Chipmoji: Suggest emoji from staged changes",
+        "icon": "$(sparkle)"
+      },
+      {
+        "command": "chipmoji.browse",
+        "title": "Chipmoji: Browse & insert emoji"
+      }
+    ],
+    "menus": {
+      "scm/title": [
+        {
+          "command": "chipmoji.suggest",
+          "group": "navigation",
+          "when": "scmProvider == git"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Chipmoji",
+      "properties": {
+        "chipmoji.useAI": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "When enabled and an Anthropic API key is available, refine the suggestion with Claude by reading the staged diff. Falls back to the offline heuristic when disabled, offline, or when no key is configured."
+        },
+        "chipmoji.anthropicApiKey": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Anthropic API key used when `#chipmoji.useAI#` is enabled. Leave blank to use the `ANTHROPIC_API_KEY` environment variable instead. Stored in your settings — prefer the environment variable on shared machines."
+        },
+        "chipmoji.model": {
+          "type": "string",
+          "default": "claude-opus-4-8",
+          "markdownDescription": "Claude model used for AI suggestions. `claude-opus-4-8` is the most capable; `claude-haiku-4-5` is faster and cheaper for this classification task."
+        },
+        "chipmoji.insert": {
+          "type": "string",
+          "enum": [
+            "shortcode",
+            "emoji"
+          ],
+          "default": "shortcode",
+          "markdownDescription": "What to insert into the commit message: the `:shortcode:` (recommended — matches the chipmoji commit format) or the rendered emoji."
+        },
+        "chipmoji.maxSuggestions": {
+          "type": "number",
+          "default": 5,
+          "minimum": 1,
+          "maximum": 15,
+          "markdownDescription": "How many ranked suggestions to show in the picker."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "sync": "node scripts/sync-chipmojis.mjs",
+    "vscode:prepublish": "npm run sync && node esbuild.mjs --production",
+    "compile": "npm run sync && node esbuild.mjs",
+    "watch": "npm run sync && node esbuild.mjs --watch",
+    "package": "vsce package"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.69.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.25.0",
+    "typescript": "^5.6.0"
+  }
+}

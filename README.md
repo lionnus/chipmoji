@@ -82,6 +82,14 @@ Examples:
 | `Esc`   | Clear the search                 |
 | `Enter` | Copy the first visible shortcode |
 
+## VS Code extension
+
+The [`extension/`](./extension) folder contains a VS Code extension that proposes the correct
+chipmoji from your staged changes and autocompletes shortcodes in the Source Control commit
+box. Ranking runs offline by default; an optional Claude-powered mode refines the pick by
+reading the diff. It reuses the same single source of truth as the website — see
+[`extension/README.md`](./extension/README.md).
+
 ## Development
 
 Requires [Node.js](https://nodejs.org/) 20+.

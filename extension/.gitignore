@@ -1,0 +1,5 @@
+node_modules/
+dist/
+*.vsix
+# Synced from ../src/data/chipmojis.ts by `npm run sync` (runs on compile/package).
+src/chipmojis.ts
