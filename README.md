@@ -6,6 +6,7 @@
   <p>
     <a href="https://chipmoji.lionn.us/"><img alt="Live site" src="https://img.shields.io/badge/live-chipmoji-863bff" /></a>
     <a href="https://github.com/lionnus/chipmoji/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/lionnus/chipmoji/actions/workflows/ci.yml/badge.svg" /></a>
+    <a href="https://codecov.io/gh/lionnus/chipmoji"><img alt="Coverage" src="https://codecov.io/gh/lionnus/chipmoji/branch/main/graph/badge.svg" /></a>
     <a href="https://github.com/lionnus/chipmoji/releases"><img alt="Release" src="https://img.shields.io/github/v/release/lionnus/chipmoji" /></a>
     <a href="./LICENSE"><img alt="License: Apache-2.0" src="https://img.shields.io/badge/license-Apache--2.0-blue" /></a>
     <img alt="Built with React + Vite" src="https://img.shields.io/badge/react%20%2B%20vite-19-61dafb" />
