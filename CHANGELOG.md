@@ -2,6 +2,12 @@
 
 All notable changes to the Chipmoji guide.
 
+## v1.1.0 — 2026-08-13
+
+- Add data and export tests with coverage, and run them in CI.
+- Add a release workflow: a version tag builds the exports and attaches them to a GitHub release.
+- Add structured issue forms, a changelog, monthly dependency updates, and status badges.
+
 ## v1.0.0 — 2026-08-13
 
 - Add a `layer` field to each entry: `hardware`, `software`, or `shared`. The site can filter on it.
