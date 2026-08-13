@@ -1,0 +1,25 @@
+name: 🐛 Bug report
+description: Report a wrong description, incorrect behaviour, or a spelling error.
+title: "[bug]: "
+labels: [bug]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What is wrong?
+      description: A short description of the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: How can we see it?
+      description: Steps to see the problem, or a link to the page.
+    validations:
+      required: false
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: false

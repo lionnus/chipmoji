@@ -1,0 +1,48 @@
+name: 💡 Chipmoji proposal
+description: Propose a new entry for the guide.
+title: "[proposal]: "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for your proposal! The list is curated, so each entry must show real demand.
+  - type: input
+    id: emoji
+    attributes:
+      label: Emoji and shortcode
+      placeholder: "🛡️ :shield:"
+    validations:
+      required: true
+  - type: input
+    id: intent
+    attributes:
+      label: Intent
+      description: The intent that the current entries do not cover. An intent is a verb, not a subsystem.
+      placeholder: Add or change protection against faults.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Give real commit messages that need this entry. More commits make a stronger case.
+      placeholder: |
+        Add ECC signals also for handshakes
+        Propagate ecc signals in interco
+    validations:
+      required: true
+  - type: textarea
+    id: fit
+    attributes:
+      label: Why do the current entries not fit?
+      description: Name the closest current entries and say why they do not cover this intent.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Compatibility
+      options:
+        - label: The shortcode is not in the official [Gitmoji](https://gitmoji.dev/) set.
+          required: true

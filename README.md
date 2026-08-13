@@ -5,6 +5,8 @@
 
   <p>
     <a href="https://chipmoji.lionn.us/"><img alt="Live site" src="https://img.shields.io/badge/live-chipmoji-863bff" /></a>
+    <a href="https://github.com/lionnus/chipmoji/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/lionnus/chipmoji/actions/workflows/ci.yml/badge.svg" /></a>
+    <a href="https://github.com/lionnus/chipmoji/releases"><img alt="Release" src="https://img.shields.io/github/v/release/lionnus/chipmoji" /></a>
     <a href="./LICENSE"><img alt="License: Apache-2.0" src="https://img.shields.io/badge/license-Apache--2.0-blue" /></a>
     <img alt="Built with React + Vite" src="https://img.shields.io/badge/react%20%2B%20vite-19-61dafb" />
     <a href="./CONTRIBUTING.md"><img alt="Contributions welcome" src="https://img.shields.io/badge/contributions-welcome-brightgreen" /></a>
@@ -32,6 +34,7 @@ the two sets.
 - [Using the guide](#using-the-guide)
 - [Development](#development)
 - [How the data flows](#how-the-data-flows)
+- [Changelog](#changelog)
 - [Contributing](#contributing)
 - [Acknowledgements](#acknowledgements)
 - [License](#license)
@@ -136,6 +139,7 @@ You must have [Node.js](https://nodejs.org/) 20 or later.
 npm install      # install the dependencies
 npm run dev      # start the dev server
 npm run lint     # run ESLint
+npm test         # run the data and export tests
 npm run build    # check the types, make the exports, and build to dist/
 npm run preview  # preview the production build
 ```
@@ -148,6 +152,11 @@ A push to `main` deploys the site to GitHub Pages. See
 [`src/data/chipmojis.ts`](./src/data/chipmojis.ts) is the only source of the data.
 `npm run build` makes [`public/chipmoji-instructions.txt`](./public/chipmoji-instructions.txt)
 and the two PDFs from it. Change the data file. Do not change the generated files.
+
+## Changelog
+
+See [CHANGELOG.md](./CHANGELOG.md). Each release also attaches the TXT and PDF exports on the
+[releases page](https://github.com/lionnus/chipmoji/releases).
 
 ## Contributing
 

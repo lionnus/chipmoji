@@ -20,6 +20,7 @@ You must have [Node.js](https://nodejs.org/) 20 or later.
 npm install
 npm run dev    # local dev server
 npm run lint   # lint before you push
+npm test       # run the data and export tests
 npm run build  # check the types and make the exports
 ```
 
@@ -45,7 +46,7 @@ npm run build  # check the types and make the exports
 
 ## Pull request checklist
 
-- [ ] `npm run lint` gives no errors.
+- [ ] `npm run lint` and `npm test` give no errors.
 - [ ] `npm run build` gives no errors. Commit the files that it makes.
 - [ ] You changed the list in `src/data/chipmojis.ts`.
 - [ ] Your commit messages use the Chipmoji format.
