@@ -4,7 +4,7 @@
 
 const name = 'chipmoji'
 const tagline = 'An emoji guide for chip development commits'
-const categories = 'RTL, verification, timing, PPA, scripts, CI, and more'
+const categories = 'RTL, timing, PPA, backend, verification, firmware, models, build, and CI'
 
 export const site = {
   name,

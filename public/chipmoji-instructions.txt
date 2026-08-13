@@ -1,71 +1,77 @@
 chipmoji — An emoji guide for chip development commits
-https://github.com/lionnus/chipmoji
+https://github.com/lionnus/chipmoji — v1.0.0
 License: Apache-2.0
 
-Use the shortcode (e.g. :bug:) as the first token of your commit message.
+Put the shortcode at the start of the commit message.
 Format: <intention> [scope?]: <message>
-Example: :bug: alu: fix signed overflow flag
+Example: :bug: alu: correct the signed overflow flag
 
-:tada: 🎉 | Begin project | Git | Initial commit or project bootstrap. | aliases: init, bootstrap
-:bug: 🐛 | Fix bug | Git | Fix functional bugs in RTL, verification, Python, scripts, or flow code. | aliases: fix, bugfix
-:ambulance: 🚑 | Critical hotfix | Git | Fix urgent breakage: failing regression, broken CI, lab blocker, release blocker, or tapeout blocker. | aliases: urgent, hotfix
-:sparkles: ✨ | New feature | Git | Add a complete new feature. | aliases: feature
-:construction: 🚧 | Work in progress | Git | Commit incomplete work intentionally. | aliases: wip
-:boom: 💥 | Breaking change | Git | Breaking interface, register map, protocol, API, timing contract, or CLI change. | aliases: breaking
-:recycle: ♻️ | Refactor | Git | Refactor without intended behavior change. | aliases: cleanup
-:art: 🎨 | Improve structure | Git | Improve structure, formatting, naming, or readability without behavior change. | aliases: style, format
-:fire: 🔥 | Remove code | Git | Remove obsolete code, files, stale scripts, or generated artifacts. | aliases: delete, remove
-:coffin: ⚰️ | Remove dead code | Git | Remove dead signals, unreachable FSM states, unused functions, or obsolete helpers. | aliases: deadcode
-:wastebasket: 🗑️ | Deprecate | Git | Deprecate code or behavior that should be removed later. | aliases: deprecated
-:truck: 🚚 | Move or rename | Git | Move or rename files, modules, packages, paths, or resources. | aliases: rename, move
-:rewind: ⏪ | Revert | Git | Revert a previous change. | aliases: rollback
-:twisted_rightwards_arrows: 🔀 | Merge branches | Git | Merge branches. Do not use for muxing, routing, or arbitration. | aliases: merge
-:see_no_evil: 🙈 | Gitignore | Git | Add or update `.gitignore`. | aliases: ignore
-:bookmark: 🔖 | Release tag | Git | Release or version tag. | aliases: release, version
-:bridge_at_night: 🌉 | CDC boundary | RTL | Clock-domain crossing, async boundary, synchronizer, handshake bridge, or reset-domain crossing. | aliases: cdc, synchronizer
-:rightwards_pushing_hand: 🫸 | Backpressure | RTL | Valid/ready pushback, stall propagation, skid buffers, flow control, or downstream backpressure. | aliases: stall, flow control
-:electric_plug: 🔌 | Interface hookup | RTL | Wire ports, buses, protocols, register interfaces, AXI/APB/TileLink/Wishbone connections, or top-level integration. | aliases: integration, bus
-:abacus: 🧮 | Datapath | RTL | Arithmetic, bit-width, fixed-point, saturation, rounding, accumulator, multiplier, divider, or datapath logic. | aliases: arithmetic, width
-:vertical_traffic_light: 🚦 | Arbitration | RTL | Arbitration, priority, scheduling, traffic shaping, QoS, credits, or grant logic. | aliases: scheduler, priority
-:compass: 🧭 | Address/topology map | RTL | Address maps, memory maps, topology, routing tables, NoC coordinates, or integration direction. | aliases: address map, topology
-:dna: 🧬 | Parameterization | RTL | Generics, parameters, SKUs, feature variants, configurable widths/depths, or generated RTL variants. | aliases: configurable, variants
-:fire_extinguisher: 🧯 | Hardware hazard fix | RTL | Fix X-prop, glitch risk, unsafe reset behavior, metastability risk, race, or silicon-escape-class hazard. | aliases: hazard, x-prop
-:magnet: 🧲 | Board bring-up | RTL | Board-level work, IO, pins, PHYs, lab-only fixes, FPGA bring-up, or constraints tied to real hardware. | aliases: fpga, board
-:satellite_antenna: 📡 | External protocol | RTL | PCIe, Ethernet, DDR, SerDes, SPI, I2C, UART, or other external protocol/link behavior. | aliases: protocol, link
-:safety_pin: 🧷 | Local workaround | RTL | Small localized hardware workaround or mitigation for a known issue. | aliases: workaround, mitigation
-:screwdriver: 🪛 | Tiny RTL fix | RTL | Small mechanical RTL adjustment too narrow for a bigger category. | aliases: small fix
-:zap: ⚡ | Improve performance | PPA | Improve speed, throughput, latency, benchmark result, or runtime. | aliases: perf, latency
-:scissors: ✂️ | Cut critical path | Timing | Reduce combinational depth, retime logic, split paths, or improve Fmax. | aliases: critical path, fmax
-:stopwatch: ⏱️ | Measure cycles | Timing | Benchmark instrumentation, cycle counting, latency measurement, or timing measurement infrastructure. | aliases: benchmark, measure
-:chart_with_downwards_trend: 📉 | Reduce area | PPA | Reduce LUTs, FFs, gates, SRAM, BRAM, DSPs, cells, or general resource usage. | aliases: area, lut
-:chart_with_upwards_trend: 📈 | Intentional PPA increase | PPA | Accept area, power, or resource increase intentionally for feature, timing, verification, or performance. | aliases: tradeoff
-:battery: 🔋 | Reduce power | PPA | Clock gating, power gating, idle behavior, low-power mode, activity reduction, or power optimization. | aliases: power, clock gating
-:white_check_mark: ✅ | Tests | Verification | Add, update, or fix passing tests, regressions, assertions, formal checks, or checkers. | aliases: tests, regression
-:test_tube: 🧪 | Failing reproducer | Verification | Add a failing test or reproducer for a known bug. | aliases: reproducer, failing test
-:rotating_light: 🚨 | Fix warnings | Verification | Fix compiler, linter, CDC, synthesis, simulation, or timing warnings. | aliases: warnings, lint
-:game_die: 🎲 | Random verification | Verification | Randomized testing, constrained-random stimulus, fuzzing, seeds, or randomized regressions. | aliases: random, fuzz
-:microscope: 🔬 | Debug visibility | Verification | Add probes, traces, counters, waveform hooks, debug CSRs, or observability. | aliases: probes, observability
-:safety_vest: 🦺 | Validation | Verification | Add validation, guards, illegal-state checks, protocol checks, or defensive checks. | aliases: checks, guards
-:seedling: 🌱 | Test data | Verification | Add seed files, sample inputs, golden data, or deterministic regression data. | aliases: golden data, samples
-:snake: 🐍 | Python tooling | Python | Python-specific implementation work when no more precise standard Gitmoji applies. | aliases: python
-:label: 🏷️ | Types | Python | Add or update Python type hints, dataclasses, TypedDicts, Pydantic models, SV typedefs, enums, or structs. | aliases: typing, typed
-:goal_net: 🥅 | Error handling | Python | Improve exceptions, parser errors, failure handling, or user-facing error messages. | aliases: exceptions, errors
-:monocle_face: 🧐 | Inspection | Python | Data exploration, report inspection, one-off analysis, or investigation scripts. | aliases: analysis, inspect
-:thread: 🧵 | Parallelism | Python | Threading, multiprocessing, async, job queues, or concurrent report processing. | aliases: concurrency, async
-:hammer: 🔨 | Scripts | Scripts | Build, sim, synth, lint, formal, regression, packaging, or helper scripts. | aliases: automation
-:wrench: 🔧 | Configuration | Scripts | Tool config, environment config, CLI config, YAML/TOML/JSON config, synthesis/sim flags, or parameters. | aliases: config
-:construction_worker: 👷 | CI | CI | CI pipelines, GitHub Actions, build matrix, scheduled jobs, or regression automation. | aliases: pipeline, actions
-:green_heart: 💚 | Fix CI | CI | Fix broken CI, regression automation, build matrix, or tool-cache issue. | aliases: ci fix
-:bricks: 🧱 | Infrastructure | Infrastructure | Hardware-flow infrastructure: runners, artifact storage, caches, job orchestration, or shared tool setup. | aliases: infra, runner
-:package: 📦 | Package artifact | Infrastructure | Add or update generated bundles, packaged IP, release artifacts, reports, or bitstreams. | aliases: artifact, bundle
-:arrow_up: ⬆️ | Upgrade dependency | Dependencies | Upgrade dependency, vendor IP, tool version, package, or submodule. | aliases: upgrade, deps
-:arrow_down: ⬇️ | Downgrade dependency | Dependencies | Downgrade dependency, vendor IP, tool version, package, or submodule. | aliases: downgrade, deps
-:pushpin: 📌 | Pin dependency | Dependencies | Pin exact versions of tools, IPs, packages, lockfiles, containers, or submodules. | aliases: pin, lock
-:heavy_plus_sign: ➕ | Add dependency | Dependencies | Add a dependency, package, included IP, submodule, or tool requirement. | aliases: add dep
-:heavy_minus_sign: ➖ | Remove dependency | Dependencies | Remove a dependency, package, included IP, submodule, or tool requirement. | aliases: remove dep
-:alien: 👽 | External tool/IP change | Dependencies | Update code due to external API, protocol, vendor IP, tool output, or report-format changes. | aliases: vendor, external
-:memo: 📝 | Documentation | Docs | Add or update docs, specs, register maps, integration notes, or README content. | aliases: docs
-:bulb: 💡 | Comments | Docs | Add or update source comments explaining hardware behavior, assumptions, or constraints. | aliases: comment
-:pencil2: ✏️ | Typo | Docs | Fix typos in docs, comments, specs, or messages. | aliases: typo
-:page_facing_up: 📄 | License | Docs | Add or update license. | aliases: license
+The layer field shows where the entry applies: hardware, software, or shared.
+Fields: shortcode emoji | title | category | layer | description | aliases
+
+:tada: 🎉 | Begin project | Git | shared | Use for the first commit in a new repository. | aliases: init, bootstrap
+:bug: 🐛 | Fix bug | Git | shared | Correct wrong behaviour in RTL, testbench, firmware, model, or flow code. This is the default fix. If a more exact entry applies, use that entry. | aliases: fix, bugfix
+:ambulance: 🚑 | Critical hotfix | Git | shared | Repair something that blocks the whole team. Examples are a failed regression, a broken pipeline, or a blocked tapeout. | aliases: urgent, hotfix
+:sparkles: ✨ | New feature | Git | shared | Add a new function that is complete and operational. Examples are a new mode, kernel, datatype, or flow step. | aliases: feature
+:hatching_chick: 🐣 | Bring-up milestone | Git | shared | Record the first time that something operates from end to end. Examples are the first hello world, the first boot, or the first full simulation on a new target. | aliases: bringup, hello world, sign of life, first boot
+:construction: 🚧 | Work in progress | Git | shared | Commit work that is not complete. Do not use this entry for large changes that are complete. | aliases: wip
+:boom: 💥 | Breaking change | Git | shared | Change an interface that other users depend on. Examples are the port list, the register map, a driver function, or the configuration format. Give the details in the commit body. | aliases: breaking
+:recycle: ♻️ | Refactor | Git | shared | Change the structure of the code, but do not change its behaviour. Examples are a module split, a move of logic between files, or a merge of two equivalent paths. | aliases: cleanup, restructure
+:art: 🎨 | Style and readability | Git | shared | Change names, layout, or format only. Do not change the logic and do not move files. | aliases: style, format, naming
+:fire: 🔥 | Remove code | Git | shared | Delete files that are no longer necessary. Examples are old scripts, old models, and generated data. | aliases: delete, remove
+:coffin: ⚰️ | Remove dead code | Git | shared | Delete code that no other code uses. Examples are unused FSM states, undriven signals, and unused parameters. | aliases: deadcode
+:wastebasket: 🗑️ | Deprecate | Git | shared | Mark code, a register, or a mode for future removal. The item continues to operate for now. | aliases: deprecated
+:truck: 🚚 | Move or rename | Git | shared | Move or rename files, modules, or directories. Do not change what they do. | aliases: rename, move
+:rewind: ⏪ | Revert | Git | shared | Undo a previous commit. | aliases: rollback
+:twisted_rightwards_arrows: 🔀 | Merge branches | Git | shared | Merge one branch into another. Do not use this entry for multiplexers or arbitration. Use 🚦 for those. | aliases: merge
+:adhesive_bandage: 🩹 | Small fix | Git | shared | Make a small correction that is not critical. Examples are a signal polarity, a guard around an assertion, or a local workaround. | aliases: workaround, nit, small fix
+:see_no_evil: 🙈 | Gitignore | Git | shared | Add or update the `.gitignore` file. | aliases: ignore
+:bookmark: 🔖 | Release and version | Git | shared | Add a release tag, or change the version number of the repository. | aliases: release, version, tag
+:electric_plug: 🔌 | Interface and integration | RTL | hardware | Connect blocks that already exist. Examples are ports, buses, protocol channels, clear and reset lines, wrappers, and top-level integration. This is the most general RTL entry. If the change is about arithmetic, flow control, parameters, or timing, use those entries. | aliases: integration, bus, hookup, wiring
+:abacus: 🧮 | Datapath and arithmetic | RTL | hardware | Change how the design computes. Examples are bit widths, accumulators, saturation, rounding, number formats, adders, multipliers, and MAC arrays. | aliases: arithmetic, width, datapath
+:vertical_traffic_light: 🚦 | Flow control and arbitration | RTL | hardware | Control when data moves and which requester wins. Examples are valid and ready handshakes, stalls, backpressure, credits, priority, round-robin, and out-of-order multiplexers. | aliases: backpressure, stall, arbitration, priority
+:dna: 🧬 | Parameterization | RTL | hardware | Make a fixed value configurable. Examples are parameters, generate blocks, hardware configurations, and support for sizes that are not a power of two. | aliases: configurable, generic, variants
+:control_knobs: 🎛️ | Register map and CSRs | RTL | shared | Change the control and status registers or the register interface. This includes the register description sources, and the RTL and the headers that you generate from them. | aliases: csr, regmap, rdl, regif
+:bridge_at_night: 🌉 | CDC and reset domains | RTL | hardware | Cross a clock domain or a reset domain. Examples are synchronizers, handshake bridges, and the constraints for them. | aliases: cdc, synchronizer, reset domain
+:shield: 🛡️ | Reliability and fault tolerance | RTL | hardware | Add or change protection against faults. Examples are ECC encoders and decoders, parity, redundancy, canary logic, and error counters. To repair a design defect, use 🧯. | aliases: ecc, parity, redundancy, safety
+:space_invader: 👾 | Tool compatibility | RTL | hardware | Change correct RTL because a tool cannot process it. Examples are synthesis guards, constructs that a tool rejects, and unpacked arrays for coverage. If the tool only gives a warning, use 🚨. | aliases: synthesizable, verilator, vcs, tool workaround
+:fire_extinguisher: 🧯 | Hardware hazard fix | RTL | hardware | Repair a defect that can stay in the silicon. Examples are X-propagation, combinational loops, unsafe resets, and undriven nets. To add fault tolerance, use 🛡️. | aliases: hazard, x-prop, comb loop
+:compass: 🧭 | Address and memory map | RTL | hardware | Change how the design calculates or arranges addresses. Examples are address maps, address generators, memory maps, and routing tables. | aliases: address map, addressgen, topology
+:satellite_antenna: 📡 | External protocol | RTL | hardware | Change an off-chip link. Examples are PCIe, Ethernet, DDR, SerDes, SPI, I2C, UART, and JTAG. | aliases: protocol, phy, link
+:magnet: 🧲 | Board and FPGA bring-up | RTL | hardware | Work on emulation or on the laboratory setup. Examples are FPGA targets, pin maps, pads, board constraints, and external memory bring-up. | aliases: fpga, board, bringup, emulation
+:label: 🏷️ | Types and structs | RTL | shared | Add or change type definitions. Examples are SystemVerilog typedefs, enumerations, packed structs, C enumerations, and Python type hints. | aliases: typedef, enum, typing
+:scissors: ✂️ | Cut critical path | Timing | hardware | Change the RTL to meet the timing target. Examples are a new pipeline stage, a new register, a retimed path, or a shorter combinational path. | aliases: critical path, pipeline, fmax, retime
+:triangular_ruler: 📐 | Timing constraints | Timing | hardware | Change the constraints instead of the RTL. Examples are SDC files, clock definitions, input and output delays, path groups, multicycle paths, and false paths. | aliases: sdc, constraints, multicycle, path groups
+:zap: ⚡ | Improve performance | PPA | shared | Decrease the number of cycles or increase the throughput. Examples are overlapped phases, hidden latency, fewer idle cycles, and fewer reloads. | aliases: perf, latency, throughput
+:chart_with_downwards_trend: 📉 | Reduce area | PPA | hardware | Decrease the number of gates, flip-flops, memories, LUTs, or FIFO entries. | aliases: area, resources, gates
+:battery: 🔋 | Reduce power | PPA | hardware | Decrease the power that the design uses. Examples are clock gating, power gating, operand isolation, and low-power modes. | aliases: power, clock gating
+:stopwatch: ⏱️ | Performance measurement | PPA | shared | Measure the performance, but do not change it. Examples are cycle counters, bandwidth and utilization metrics, and performance data in the pipeline. | aliases: benchmark, counters, profiling
+:factory: 🏭 | Backend flow | Backend | hardware | Change the implementation flow. Examples are elaboration, synthesis and place-and-route scripts, technology setup, memory macro generation, gate-level simulation, and power and area reports. | aliases: synthesis, pnr, implementation, flow
+:cityscape: 🏙️ | Floorplan and physical | Backend | hardware | Change the physical layout. Examples are the floorplan, the utilization, macro placement, power domains, blockages, and pin constraints. | aliases: floorplan, placement, macro, power domain
+:white_check_mark: ✅ | Tests | Verification | shared | Add, extend, or repair tests and regressions. Use this entry for the tests, not for the environment that runs them. | aliases: tests, regression
+:petri_dish: 🧫 | Testbench infrastructure | Verification | hardware | Change the environment that runs the tests. Examples are the testbench, drivers, memory models, checkers, stall injection, timeouts, and waveform setup. | aliases: testbench, tb, harness, dv
+:game_die: 🎲 | Stimulus and workloads | Verification | shared | Change how you make the test data. Examples are workload generators, sweep definitions, random stimulus, seeds, and access patterns. | aliases: stimulus, random, generator, sweep
+:spider_web: 🕸️ | Coverage | Verification | hardware | Collect or increase the coverage. This includes exclusions, waivers, and changes that you make only to cover more logic. | aliases: coverage, exclusions
+:microscope: 🔬 | Debug visibility | Verification | shared | Make the internal behaviour visible. Examples are tracers, probes, debug counters, waveform hooks, and debug messages. | aliases: probes, trace, observability, waves
+:safety_vest: 🦺 | Assertions and formal | Verification | shared | Add or change the checks that the design must satisfy. Examples are assertions, protocol checkers, formal properties, and parameter guards. This includes severities and waivers. | aliases: assertions, sva, formal, waivers
+:rotating_light: 🚨 | Fix warnings and lint | Verification | shared | Correct the warnings that a tool gives. Examples are RTL lint, style rules, synthesis and simulation warnings, and code formatters. | aliases: lint, warnings, style rules
+:boot: 🥾 | Boot and runtime | Firmware | software | Change the code that starts and supports the system. Examples are the bootrom, the startup code, linker scripts, the memory layout, device trees, core initialization, and the bare-metal runtime. | aliases: boot, bootrom, runtime, linker, device tree
+:joystick: 🕹️ | Firmware and HAL | Firmware | software | Change the code that operates the hardware. Examples are the driver and the HAL, register programming, generated headers, and on-target test programs and kernels. | aliases: hal, driver, firmware
+:mirror: 🪞 | Golden model | Modeling | software | Change the reference model that you compare the hardware against. This includes the numerics of the model and the test data that it makes. | aliases: golden model, reference model
+:monocle_face: 🧐 | Analysis and inspection | Modeling | software | Examine the results. Examples are performance and PPA analysis scripts, trace plots, report parsers, and single-use investigations. | aliases: analysis, plots, reports
+:snake: 🐍 | Python tooling | Modeling | software | Change Python code that is not the model and not an analysis. Examples are command-line tools, packaging, and helper libraries. | aliases: python, cli, tooling
+:hammer: 🔨 | Scripts and build system | Build | shared | Change the machinery that builds and runs the project. Examples are makefiles, build targets, test runners, and simulation scripts. | aliases: makefile, runner, automation
+:wrench: 🔧 | Configuration | Build | shared | Change the settings, not the machinery. Examples are tool flags, configuration files, default values, and hardware configuration files. If the change is RTL, testbench, firmware, backend, or CI, use those entries. To make a value configurable, use 🧬. | aliases: config, flags, settings
+:construction_worker: 👷 | CI pipelines | Build | shared | Add or change the continuous integration setup. Examples are stages, job matrices, caches, artifacts, and scheduled regressions. | aliases: pipeline, actions
+:green_heart: 💚 | Fix CI | Build | shared | Repair a pipeline that fails. Examples are cache paths, tool versions, file errors, and races between jobs. Use this entry instead of 🐛 when only the pipeline was defective. | aliases: ci fix
+:bricks: 🧱 | Infrastructure | Build | shared | Change the infrastructure around the flow. Examples are runners, containers, tool setup, and artifact storage. | aliases: infra, runner, container
+:arrow_up: ⬆️ | Update dependency | Dependencies | shared | Change the version of an IP, a submodule, a tool, or a package. This includes the code changes that the new version makes necessary. | aliases: bump, upgrade, ip
+:pushpin: 📌 | Pin or repoint | Dependencies | shared | Change which revision you use, but not which version you want. Examples are lock files, pinned tool versions, and a dependency that points to a different branch or fork. | aliases: pin, lock, pointer
+:heavy_plus_sign: ➕ | Add dependency | Dependencies | shared | Add an IP, a submodule, a package, or a tool. | aliases: add dep
+:heavy_minus_sign: ➖ | Remove dependency | Dependencies | shared | Remove an IP, a submodule, a package, or a tool. | aliases: remove dep
+:alien: 👽 | External change | Dependencies | shared | Adapt to a change that you do not control. Examples are a new IP interface, a new report format, or a new tool release. | aliases: vendor, upstream, external
+:memo: 📝 | Documentation | Docs | shared | Add or update the documentation. Examples are READMEs, specifications, integration notes, register documentation, and changelogs. | aliases: docs, readme, spec, changelog
+:bulb: 💡 | Comments | Docs | shared | Add or update the comments in the source code. | aliases: comment
+:pencil2: ✏️ | Typo | Docs | shared | Correct a spelling error in the documentation, the comments, or a message. | aliases: typo
+:page_facing_up: 📄 | License | Docs | shared | Add or update the license and the file headers. | aliases: license, header
 

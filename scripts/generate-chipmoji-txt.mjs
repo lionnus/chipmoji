@@ -2,6 +2,8 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import ts from 'typescript'
 
+const { version } = JSON.parse(readFileSync(resolve(process.cwd(), 'package.json'), 'utf8'))
+
 const repoRoot = resolve(process.cwd())
 const sourcePath = resolve(repoRoot, 'src/data/chipmojis.ts')
 const outputPath = resolve(repoRoot, 'public/chipmoji-instructions.txt')
@@ -54,6 +56,7 @@ const parseEntry = (node) => {
       case 'title':
       case 'description':
       case 'category':
+      case 'layer':
       case 'type':
       case 'example':
         entry[key] = parseString(property.initializer, key)
@@ -82,16 +85,19 @@ const chipmojis = chipmojisDeclaration.initializer.elements.map(parseEntry)
 
 const lines = [
   'chipmoji — An emoji guide for chip development commits',
-  'https://github.com/lionnus/chipmoji',
+  `https://github.com/lionnus/chipmoji — v${version}`,
   'License: Apache-2.0',
   '',
-  'Use the shortcode (e.g. :bug:) as the first token of your commit message.',
+  'Put the shortcode at the start of the commit message.',
   'Format: <intention> [scope?]: <message>',
-  'Example: :bug: alu: fix signed overflow flag',
+  'Example: :bug: alu: correct the signed overflow flag',
+  '',
+  'The layer field shows where the entry applies: hardware, software, or shared.',
+  'Fields: shortcode emoji | title | category | layer | description | aliases',
   '',
   ...chipmojis.map(
     (item) =>
-      `${item.shortcode} ${item.emoji} | ${item.title} | ${item.category} | ${item.description} | aliases: ${item.aliases.length > 0 ? item.aliases.join(', ') : '-'}`,
+      `${item.shortcode} ${item.emoji} | ${item.title} | ${item.category} | ${item.layer} | ${item.description} | aliases: ${item.aliases.length > 0 ? item.aliases.join(', ') : '-'}`,
   ),
   '',
 ]

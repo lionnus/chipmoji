@@ -4,6 +4,7 @@ import { site } from './site'
 import './index.css'
 
 type Filter = 'All' | 'Recommended' | Chipmoji['category']
+type LayerFilter = 'All layers' | 'Hardware' | 'Software' | 'Shared'
 
 const filters: Filter[] = [
   'All',
@@ -12,14 +13,22 @@ const filters: Filter[] = [
   'RTL',
   'Timing',
   'PPA',
+  'Backend',
   'Verification',
-  'Python',
-  'Scripts',
-  'CI',
-  'Docs',
+  'Firmware',
+  'Modeling',
+  'Build',
   'Dependencies',
-  'Infrastructure',
+  'Docs',
 ]
+
+const layerFilters: LayerFilter[] = ['All layers', 'Hardware', 'Software', 'Shared']
+
+const layerOf: Record<Exclude<LayerFilter, 'All layers'>, Chipmoji['layer']> = {
+  Hardware: 'hardware',
+  Software: 'software',
+  Shared: 'shared',
+}
 
 const repositoryUrl = site.repository
 const siteUrl = site.url
@@ -33,13 +42,13 @@ const categoryColors: Record<Chipmoji['category'], string> = {
   RTL: '#863bff',
   Timing: '#ef4444',
   PPA: '#10b981',
+  Backend: '#a16207',
   Verification: '#3b82f6',
-  Python: '#eab308',
-  Scripts: '#f97316',
-  CI: '#14b8a6',
-  Docs: '#6366f1',
+  Firmware: '#f97316',
+  Modeling: '#eab308',
+  Build: '#14b8a6',
   Dependencies: '#ec4899',
-  Infrastructure: '#64748b',
+  Docs: '#6366f1',
 }
 
 const DownloadIcon = () => (
@@ -98,6 +107,7 @@ function App() {
   const searchRef = useRef<HTMLInputElement>(null)
   const [search, setSearch] = useState('')
   const [filter, setFilter] = useState<Filter>('All')
+  const [layerFilter, setLayerFilter] = useState<LayerFilter>('All layers')
   const [copied, setCopied] = useState('')
   const [shareOpen, setShareOpen] = useState(false)
   const shareRef = useRef<HTMLDivElement>(null)
@@ -107,6 +117,9 @@ function App() {
   const visible = useMemo(() => {
     const q = search.trim().toLowerCase()
     return chipmojis.filter((item) => {
+      if (layerFilter !== 'All layers' && item.layer !== layerOf[layerFilter]) {
+        return false
+      }
       if (q) {
         return [
           item.emoji,
@@ -114,6 +127,7 @@ function App() {
           item.title,
           item.description,
           item.category,
+          item.layer,
           item.example,
           ...item.aliases,
         ]
@@ -123,7 +137,7 @@ function App() {
       }
       return filter === 'All' || (filter === 'Recommended' ? item.recommended : item.category === filter)
     })
-  }, [filter, search])
+  }, [filter, layerFilter, search])
 
   const copy = async (value: string) => {
     try {
@@ -274,6 +288,18 @@ function App() {
               </button>
             ))}
           </div>
+          <div className="filters layers">
+            {layerFilters.map((pill) => (
+              <button
+                key={pill}
+                type="button"
+                className={pill === layerFilter ? 'active' : ''}
+                onClick={() => setLayerFilter(pill)}
+              >
+                {pill}
+              </button>
+            ))}
+          </div>
         </section>
 
         {visible.length === 0 ? (
@@ -301,7 +327,10 @@ function App() {
                   </button>
                 </div>
                 <span className="card-rule" style={{ background: categoryColors[item.category] }} />
-                <p className="card-title">{item.title}</p>
+                <p className="card-title">
+                  {item.title}
+                  <span className={`card-layer ${item.layer}`}>{item.layer}</span>
+                </p>
                 <p className="card-desc">{item.description}</p>
               </article>
             ))}
