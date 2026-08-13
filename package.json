@@ -1,7 +1,7 @@
 {
   "name": "chipmoji",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
   "description": "An emoji guide for chip development commits.",
   "keywords": [

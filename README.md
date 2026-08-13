@@ -13,20 +13,22 @@
 
 ---
 
-`Chipmoji` is a curated, Gitmoji-inspired commit emoji guide for RTL, verification, timing
-closure, PPA, Python tooling, scripts, CI, infrastructure, dependencies, and normal Git
-workflow.
+`Chipmoji` is a commit emoji guide for chip projects. It covers RTL design, timing
+closure, PPA, backend implementation, verification, firmware, models and tooling,
+build and CI, dependencies, and normal Git work.
 
-It preserves standard Gitmoji meanings and adds hardware-specific entries for critical-path
-cuts, CDC, backpressure, datapaths, arbitration, PPA, debug visibility, board bring-up, and
-IP/tool updates.
+`Chipmoji` keeps the meaning of each standard [Gitmoji](https://gitmoji.dev/). Each
+Chipmoji extension uses a shortcode that Gitmoji does not use. Therefore you can mix
+the two sets.
 
 👉 **[Browse the guide at chipmoji.lionn.us](https://chipmoji.lionn.us/)**
 
 ## Table of contents
 
 - [Why?](#why)
+- [Hardware, software, shared](#hardware-software-shared)
 - [Commit format](#commit-format)
+- [How to select an entry](#how-to-select-an-entry)
 - [Using the guide](#using-the-guide)
 - [Development](#development)
 - [How the data flows](#how-the-data-flows)
@@ -36,20 +38,32 @@ IP/tool updates.
 
 ## Why?
 
-Hardware commits often describe intent that normal software-focused commit emojis do not
-capture well:
+Chip commits show intent that software emoji sets do not cover. For example:
 
-- cutting a critical path
-- fixing CDC
-- propagating backpressure
-- reducing area
-- reducing power
-- adding probes or waveform visibility
-- updating included IPs
-- changing RTL interfaces
-- improving simulation and synthesis scripts
+- you cut a critical path, or you constrain it instead
+- you control backpressure and arbitration
+- you change correct RTL because a tool cannot process it
+- you add ECC, parity, or other protection against faults
+- you regenerate the register interface after a change to the register map
+- you change the synthesis, floorplan, or place-and-route flow
+- you change the testbench, the stimulus, or the coverage
+- you change the bootrom, the runtime, or the golden model together with the RTL
 
-`Chipmoji` gives those changes a compact visual language.
+Without entries for these, most commits become 🔧, 🚧, or 🐛. `Chipmoji` gives them a
+short visual language instead.
+
+## Hardware, software, shared
+
+A chip repository holds two codebases and the glue between them. The same word can
+mean different work on each side. Therefore each entry has a **layer**:
+
+| Layer      | What it covers                                                     |
+| ---------- | ------------------------------------------------------------------ |
+| `hardware` | RTL, timing, backend, and verification of the design                |
+| `software` | firmware, HAL, boot code, models, and tooling                       |
+| `shared`   | work that has the same meaning on each side, and build, CI and docs |
+
+You can filter by layer on the site.
 
 ## Commit format
 
@@ -60,19 +74,51 @@ capture well:
 Examples:
 
 ```text
-:scissors: execute: split multiplier bypass path
-:bridge_at_night: uart: synchronize rx_valid into core clock
-:rightwards_pushing_hand: axi: propagate downstream backpressure
-:chart_with_downwards_trend: decode: share immediate extraction logic
+:scissors: execute: split the multiplier bypass path
+:triangular_ruler: synth: set the io delays to 0.5*TCK
+:vertical_traffic_light: axi: propagate the downstream backpressure
+:boot: runtime: initialize the core structures at startup
 ```
+
+## How to select an entry
+
+Three rules make the choice easy.
+
+**The emoji is the verb. The scope is the noun.** Do not look for an entry for the
+subsystem that you changed. Put the subsystem in the scope, and use the emoji for
+what you did to it:
+
+```text
+:sparkles: tiling: support partial tiles in the N dimension
+:scissors: tiling: cut the sliding-window comb path
+:dna:      tiling: make the tile size configurable
+```
+
+**One commit can cross layers.** A treewide rename or an IP integration changes the
+RTL, the software and the build at the same time. It is still one intent. Select the
+emoji for that intent and use a wide scope:
+
+```text
+:electric_plug: treewide: integrate the vector unit into the cluster
+:truck:         treewide: add the cc_ prefix to all modules
+```
+
+Do not divide such a commit only to give each file a different emoji.
+
+**Do not confuse the change with the measurement.** ⚡ makes the design faster, and
+⏱️ measures how fast it is. ✂️ changes the RTL to meet timing, and 📐 constrains it
+instead. ✅ is the tests, and 🧫 is the environment that runs them. 🚨 corrects a
+warning from a tool, and 👾 works around a limit of that tool.
+
+If two entries still apply, use the more exact one.
 
 ## Using the guide
 
-- **Search** across emoji, shortcode, title, description, category, alias, or example.
-- **Filter** by category or by the curated `Recommended` set.
-- **Click** any emoji or shortcode to copy it to the clipboard.
-- **Download PDF (A4)** for a print-ready, landscape cheat sheet grouped by category.
-- **Download TXT** for a plain-text reference you can drop into a repo or editor snippet.
+- **Search** the emoji, shortcode, title, description, category, layer, alias, or example.
+- **Filter** by category, by layer, or by the `Recommended` set.
+- **Click** an emoji or a shortcode to copy it.
+- **Download PDF (A4)** for a cheat sheet that you can print.
+- **Download TXT** for a plain-text file that you can put in a repository or an editor snippet.
 
 ### Keyboard shortcuts
 
@@ -84,31 +130,30 @@ Examples:
 
 ## Development
 
-Requires [Node.js](https://nodejs.org/) 20+.
+You must have [Node.js](https://nodejs.org/) 20 or later.
 
 ```bash
-npm install      # install dependencies
+npm install      # install the dependencies
 npm run dev      # start the dev server
 npm run lint     # run ESLint
-npm run build    # type-check, regenerate the TXT export, and build to dist/
-npm run preview  # preview the production build locally
+npm run build    # check the types, make the exports, and build to dist/
+npm run preview  # preview the production build
 ```
 
-The site is deployed to GitHub Pages automatically on every push to `main`
-via [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml).
+A push to `main` deploys the site to GitHub Pages. See
+[`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml).
 
 ## How the data flows
 
-The single source of truth is [`src/data/chipmojis.ts`](./src/data/chipmojis.ts). The plain-text
-export at [`public/chipmoji-instructions.txt`](./public/chipmoji-instructions.txt) is generated
-from it by [`scripts/generate-chipmoji-txt.mjs`](./scripts/generate-chipmoji-txt.mjs) and is
-regenerated automatically on `npm run build`. Edit the data file, never the generated TXT.
+[`src/data/chipmojis.ts`](./src/data/chipmojis.ts) is the only source of the data.
+`npm run build` makes [`public/chipmoji-instructions.txt`](./public/chipmoji-instructions.txt)
+and the two PDFs from it. Change the data file. Do not change the generated files.
 
 ## Contributing
 
-Contributions are welcome! Please read [CONTRIBUTING.md](./CONTRIBUTING.md) first.
+Contributions are welcome. Read [CONTRIBUTING.md](./CONTRIBUTING.md) first.
 
-Keep the list curated, intentional, and compatible with standard Gitmoji meanings.
+Keep the list short and keep it compatible with standard Gitmoji.
 
 ## Acknowledgements
 
