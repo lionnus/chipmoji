@@ -20,6 +20,7 @@ You must have [Node.js](https://nodejs.org/) 20 or later.
 npm install
 npm run dev    # local dev server
 npm run lint   # lint before you push
+npm test       # run the data and export tests
 npm run build  # check the types and make the exports
 ```
 
@@ -39,13 +40,13 @@ npm run build  # check the types and make the exports
 - An entry must be an intent, not a subsystem. Tiling, DMA and caches are subsystems.
   They go in the scope, not in the emoji.
 - Give an `example` in the commit format: `<intention> [scope?]: <message>`.
-- Set `recommended: true` only for an entry that you use frequently.
+- Keep the recommended set small, about 15 entries. It is the set that a new user learns first, and it must cover most day-to-day commits.
 - Write the `description` in simple technical English. Use short sentences, the active
   voice, and one idea in each sentence.
 
 ## Pull request checklist
 
-- [ ] `npm run lint` gives no errors.
+- [ ] `npm run lint` and `npm test` give no errors.
 - [ ] `npm run build` gives no errors. Commit the files that it makes.
 - [ ] You changed the list in `src/data/chipmojis.ts`.
 - [ ] Your commit messages use the Chipmoji format.

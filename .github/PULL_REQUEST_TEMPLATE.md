@@ -12,6 +12,7 @@ Briefly describe what this PR changes and why.
 ## Checklist
 
 - [ ] `npm run lint` passes
+- [ ] `npm test` passes
 - [ ] `npm run build` passes (and the regenerated `public/chipmoji-instructions.txt` is committed)
 - [ ] List changes were made in `src/data/chipmojis.ts`, not the generated TXT
 - [ ] New entries preserve standard [Gitmoji](https://gitmoji.dev/) meanings

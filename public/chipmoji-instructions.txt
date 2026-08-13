@@ -1,5 +1,5 @@
 chipmoji — An emoji guide for chip development commits
-https://github.com/lionnus/chipmoji — v1.0.0
+https://github.com/lionnus/chipmoji — v1.1.0
 License: Apache-2.0
 
 Put the shortcode at the start of the commit message.
