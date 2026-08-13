@@ -7,6 +7,7 @@ All notable changes to the Chipmoji guide.
 - Add data and export tests with coverage, and run them in CI.
 - Add a release workflow: a version tag builds the exports and attaches them to a GitHub release.
 - Add structured issue forms, a changelog, monthly dependency updates, and status badges.
+- Reduce the recommended set to the 15 most frequent intents.
 
 ## v1.0.0 — 2026-08-13
 

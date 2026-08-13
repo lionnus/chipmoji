@@ -88,8 +88,8 @@ describe('curation', () => {
     expect(chipmojis.length).toBeLessThanOrEqual(70)
   })
 
-  it('recommends at most 40 entries', () => {
-    expect(chipmojis.filter((c) => c.recommended).length).toBeLessThanOrEqual(40)
+  it('recommends at most 16 entries', () => {
+    expect(chipmojis.filter((c) => c.recommended).length).toBeLessThanOrEqual(16)
   })
 
   it('covers every category', () => {

@@ -40,7 +40,7 @@ npm run build  # check the types and make the exports
 - An entry must be an intent, not a subsystem. Tiling, DMA and caches are subsystems.
   They go in the scope, not in the emoji.
 - Give an `example` in the commit format: `<intention> [scope?]: <message>`.
-- Set `recommended: true` only for an entry that you use frequently.
+- Keep the recommended set small, about 15 entries. It is the set that a new user learns first, and it must cover most day-to-day commits.
 - Write the `description` in simple technical English. Use short sentences, the active
   voice, and one idea in each sentence.
 
